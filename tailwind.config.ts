@@ -67,15 +67,26 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        spin: {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+        "xp-progress": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(100%)" },
         },
+        "minimize": {
+          "0%": { 
+            transform: "scale(1) translate(0, 0)",
+            opacity: "1"
+          },
+          "100%": { 
+            transform: "scale(0.1) translate(0, 1000px)",
+            opacity: "0"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "spin": "spin 4s linear infinite",
+        "xp-progress": "xp-progress 2s infinite",
+        "minimize": "minimize 0.3s ease-in forwards"
       },
     },
   },

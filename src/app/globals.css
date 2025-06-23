@@ -134,8 +134,9 @@
     bottom: 0;
     background-image: url('/bliss.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: bottom;
     background-repeat: no-repeat;
+    background-color: #014393;
     z-index: -1;
   }
 
