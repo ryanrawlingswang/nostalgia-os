@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ryan Wang – Chaotic Good Coder</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: radial-gradient(circle at top, #111 0%, #000 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #f8f8f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      color: #ff69b4;
+      text-shadow: 2px 2px #222;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #aaa;
+      margin-top: -10px;
+    }
+
+    .section {
+      background: #222;
+      border: 3px dashed #ff69b4;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 800px;
+      transition: transform 0.2s ease;
+    }
+
+    .section:hover {
+      transform: scale(1.01) rotate(-0.5deg);
+    }
+
+    .section h3 {
+      cursor: pointer;
+      color: #00ffff;
+      font-size: 1.4rem;
+    }
+
+    .content {
+      display: none;
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .skills span {
+      display: inline-block;
+      background: #111;
+      border: 2px solid #00ffff;
+      border-radius: 999px;
+      padding: 0.5em 1em;
+      margin: 0.4em;
+      font-size: 1em;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .skills span:hover {
+      transform: rotate(-5deg) scale(1.2);
+      background: #00ffff;
+      color: #111;
+    }
+
+    .mode-toggle {
+      margin-top: 1rem;
+      padding: 0.4em 1em;
+      font-size: 0.9em;
+      cursor: pointer;
+      background: #ff69b4;
+      border: none;
+      border-radius: 6px;
+      color: black;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.8em;
+      color: #555;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🤪 Ryan Wang</h1>
+  <h2>⚡️ Chaotic Good Engineer | 🚀 CTO Energy | 💥 Probably Overthinking</h2>
+
+  <div class="section">
+    <h3 onclick="toggle('about')">🌈 Who TF Am I?</h3>
+    <div class="content" id="about">
+      <p>
+        Currently causing controlled chaos from Durham, NC. I make software that doesn’t suck, automate the un-automatable, and help teams scale like they’ve got a secret weapon. Formerly at Amazon & Atlassian. Future… senator? Food truck owner? TBD.
+      </p>
+      <p>
+        I live for velocity, clarity, and using code as a tool to shake up industries. Right now, I run <a href="https://stratussoftworks.dev" target="_blank">Stratus Softworks</a>, aka “SEAL Team 6 for software.”
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3 onclick="toggle('skills')">🛠️ Nerd Powers</h3>
+    <div class="content" id="skills">
+      <div class="skills">
+        <span>TypeScript</span>
+        <span>Next.js</span>
+        <span>Go</span>
+        <span>React</span>
+        <span>AWS Infra</span>
+        <span>Regulatory Madness</span>
+        <span>Voicebots</span>
+        <span>Being Annoying in a Cool Way</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3 onclick="toggle('facts')">👀 Fun / Embarrassing Facts</h3>
+    <div class="content" id="facts">
+      <ul id="fact-list">
+        <li>⚠️ Spent 2 months obsessing over a car I didn’t buy (still dreaming of that GT-R tho)</li>
+        <li>💍 Engaged to a PhD in Biostats. I do code. He does math. Together, we fight crime (and insurance companies).</li>
+        <li>🧠 I once tried to turn voice menus into a productivity tool. It kind of worked. Kind of.</li>
+        <li>📞 I built a credentialing robot that complains less than I do.</li>
+      </ul>
+      <button class="mode-toggle" onclick="toggleFacts()">Toggle Serious Mode 🤓</button>
+    </div>
+  </div>
+
+  <footer>
+    Made with love, bubble tea, and mild insomnia by Ryan Wang – <a href="https://stratussoftworks.dev" target="_blank">stratussoftworks.dev</a>
+  </footer>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const factList = document.getElementById('fact-list');
+    let sillyMode = true;
+
+    function toggleFacts() {
+      sillyMode = !sillyMode;
+      factList.innerHTML = sillyMode
+        ? `
+          <li>⚠️ Spent 2 months obsessing over a car I didn’t buy (still dreaming of that GT-R tho)</li>
+          <li>💍 Engaged to a PhD in Biostats. I do code. He does math. Together, we fight crime (and insurance companies).</li>
+          <li>🧠 I once tried to turn voice menus into a productivity tool. It kind of worked. Kind of.</li>
+          <li>📞 I built a credentialing robot that complains less than I do.</li>`
+        : `
+          <li>🎓 Software engineer with experience at Amazon and Atlassian.</li>
+          <li>💼 Founder of Stratus Softworks, specializing in high-stakes technical delivery.</li>
+          <li>💡 Passionate about improving healthcare infrastructure through automation.</li>
+          <li>🗳️ Exploring a future in public service with a focus on equity and economic mobility.</li>`;
+    }
+
+    console.log('%c👀 You lookin’ at my source code? Bold move.', 'color: #ff69b4; font-size: 14px');
+    console.log('💌 Let’s build something weird: ryan@stratussoftworks.dev');
+  </script>
+
+</body>
+</html>
