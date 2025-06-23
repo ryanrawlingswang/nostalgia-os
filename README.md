@@ -1,6 +1,6 @@
-# Windows XP Portfolio Generator
+# NostalgiaOS
 
-A nostalgic Windows XP-themed portfolio generator built with Next.js. This application generates personalized portfolios with the classic Windows XP look and feel.
+A Windows XP-themed portfolio generator built with Next.js. Experience the nostalgia of the classic Windows XP interface while creating modern, personalized portfolios.
 
 ## Features
 
@@ -21,7 +21,7 @@ A nostalgic Windows XP-themed portfolio generator built with Next.js. This appli
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/winxp-portfolio-generator.git
+git clone https://github.com/ryanrawlingswang/nostalgia-os.git
 ```
 
 2. Install dependencies:
