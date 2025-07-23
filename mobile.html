@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iOS Resume</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f0f0f0;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #000;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+
+        /* Home Screen */
+        .home-screen {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: calc(100%);
+            background: linear-gradient(180deg, #a3c6f3 0%, #0a246a 100%);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 20px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Vibe coded message */
+        .vibe-coded {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            z-index: 10;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        /* App Icon */
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .app-icon .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-icon .label {
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Dock */
+        .dock {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .dock .app-icon {
+            margin: 0;
+        }
+
+        .dock .app-icon .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+        }
+
+        /* App Windows */
+        .app-window {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 20px);
+            background: white;
+            display: none;
+            flex-direction: column;
+            z-index: 500;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-window.active {
+            display: flex;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            height: 44px;
+            background: linear-gradient(to bottom, #a3c6f3, #0a246a);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .nav-bar .title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-bar .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .nav-bar .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+        }
+
+        /* App Content */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        /* Resume Styles */
+        .resume-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .resume-header h1 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .resume-header p {
+            font-size: 14px;
+            color: black;
+        }
+
+        .resume-section {
+            margin-bottom: 20px;
+        }
+
+        .resume-section h2 {
+            color: #fff;
+            font-size: 18px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .resume-section ul {
+            padding-left: 20px;
+        }
+
+        .resume-section li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: black;
+        }
+
+        .resume-section p {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: black;
+        }
+
+        /* About Me Styles */
+        .about-me {
+            text-align: center;
+        }
+
+        .about-me h2 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .about-me ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-me li {
+            background: #222;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* Gallery Styles */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Snake Game Styles */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .game-canvas {
+            border: 1px solid black;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .game-controls {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background: #0a246a;
+            color: white;
+            border: none;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Game Over Message */
+        #game-over-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #game-over-message h3 {
+            margin: 0 0 10px 0;
+            color: white;
+        }
+
+        #game-over-message p {
+            margin: 0 0 15px 0;
+            color: white;
+        }
+
+        /* Music Player Styles */
+        .music-player h2 {
+            color: black;
+            text-align: center;
+        }
+
+        .music-player p {
+            color: black;
+            text-align: center;
+        }
+
+        .player-controls {
+            margin: 20px 0;
+        }
+
+        .player-btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 20px;
+            border: none;
+            background: #333;
+            color: white;
+            font-size: 16px;
+        }
+
+        .volume-control {
+            margin: 20px 0;
+        }
+
+        .volume-control label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .volume-slider {
+            width: 80%;
+        }
+
+        /* Gallery Overlay */
+        #image-overlay {
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <span>9:41</span>
+        <span>📶 🔋</span>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="home-screen" id="home-screen">
+        <!-- App Icons -->
+        <div class="app-icon" onclick="openApp('resume')">
+            <div class="icon" style="background: #0a246a; color: white;">📄</div>
+            <div class="label">Resume</div>
+        </div>
+        <div class="app-icon" onclick="openApp('gallery')">
+            <div class="icon" style="background: #ff6b6b; color: white;">🖼️</div>
+            <div class="label">Gallery</div>
+        </div>
+        <div class="app-icon" onclick="openApp('music')">
+            <div class="icon" style="background: #5dade2; color: white;">🎵</div>
+            <div class="label">Music</div>
+        </div>
+        <div class="app-icon" onclick="openApp('snake')">
+            <div class="icon" style="background: #27ae60; color: white;">🐍</div>
+            <div class="label">Snake</div>
+        </div>
+        <div class="app-icon" onclick="openApp('about')">
+            <div class="icon" style="background: #f39c12; color: white;">❓</div>
+            <div class="label">About Me</div>
+        </div>
+    </div>
+    
+    <!-- Vibe coded message -->
+    <div class="vibe-coded">Vibe coded with love &lt;3</div>
+
+    <!-- Dock -->
+    <div class="dock">
+        <div class="app-icon" onclick="openApp('resume')">
+            <div class="icon" style="background: #0a246a; color: white;">📄</div>
+        </div>
+        <div class="app-icon" onclick="openApp('gallery')">
+            <div class="icon" style="background: #ff6b6b; color: white;">🖼️</div>
+        </div>
+        <div class="app-icon" onclick="openApp('music')">
+            <div class="icon" style="background: #5dade2; color: white;">🎵</div>
+        </div>
+        <div class="app-icon" onclick="openApp('snake')">
+            <div class="icon" style="background: #27ae60; color: white;">🐍</div>
+        </div>
+    </div>
+
+
+    <!-- Resume App -->
+    <div class="app-window" id="resume-app">
+        <div class="nav-bar">
+            <button class="back-btn" onclick="goHome()">◀ Back</button>
+            <div class="title">My Resume</div>
+            <button class="close-btn" onclick="closeApp('resume')">✕</button>
+        </div>
+        <div class="app-content">
+            <div class="resume-header">
+                <h1>Ryan Wang</h1>
+                <p>krumbholz98@gmail.com | linkedin.com/in/ryanrawlingswang | github.com/ryanrawlingswang</p>
+            </div>
+
+            <div class="resume-section">
+                <h2>Skills</h2>
+                <ul>
+                    <li><strong>Languages:</strong> Java, JavaScript/TypeScript, Python, Go</li>
+                    <li><strong>Technologies:</strong> AWS (Lambda, ECS, DynamoDB, CDK, IAM, KMS, S3, etc), PostgreSQL,
+                        Node.JS, React, NextJS, Spring Boot, Express</li>
+                </ul>
+            </div>
+
+            <div class="resume-section">
+                <h2>Experience</h2>
+
+                <h3>Stratus Softworks - Founder, CEO</h3>
+                <p><em>March 2024 – Present | Durham, NC</em></p>
+                <ul>
+                    <li>Led end-to-end design, development, and production roll-out of an enterprise-grade credentialing
+                        SaaS platform, reducing client credentialing and enrollment times by 70% over manual processes
+                        using
+                        Next.js, TypeScript, React, and AWS.</li>
+                    <li>Designed and implemented secure, scalable, Hipaa compliant workflows for provider credentialing,
+                        practice management, and document handling.</li>
+                    <li>Designed and implemented a Hipaa compliant data vault for provider data leveraging an in-house
+                        tokenization layer that I built.</li>
+                    <li>Salvaged critical Network Configuration Disaster Recovery project, preventing loss of major
+                        customer
+                        contract by rearchitecting the feature, integrating it with their systems, and delivering a
+                        functional solution 1.5 months ahead of schedule.</li>
+                    <li>Implemented the disaster recovery product within 1.5 months, building a full CI/CD pipeline and
+                        performing rigorous testing, leveraging a very heavily async job processing flow with SQS, ECS,
+                        Dynamo, and SNS.</li>
+                    <li>Introduced automated testing, security, and performance optimizations; added structured logging
+                        and
+                        metrics for observability.</li>
+                    <li>Delivered multi-region, multi-stage CI/CD pipelines and established coding/infrastructure best
+                        practices for clients.</li>
+                    <li>Led client discovery calls and technical workshops to define project requirements and strategy.
+                    </li>
+                </ul>
+
+                <h3>Atlassian - Software Engineer II, Confluence AI</h3>
+                <p><em>January 2024 – January 2025 | Durham, NC</em></p>
+                <ul>
+                    <li>Decommissioned and migrated legacy LLM prompt template management service with zero downtime,
+                        refactoring code, cutting costs, and reducing latency by 400 ms on average; ensured seamless
+                        functionality for downstream users and reduced technical debt.</li>
+                    <li>Led the multi-phase development and launch of the comments summary feature in Confluence, which
+                        provides concise LLM-generated summaries and actionable items. This involved experimentation,
+                        A/B
+                        testing, incorporating internal dogfooding feedback, and close collaboration with Product
+                        Managers
+                        to iterate on the feature.</li>
+                    <li>Improved accuracy of comments summary feature from 21% to 98% by advocating for and implementing
+                        a
+                        structured output (JSON) approach, demonstrating impact through rigorous evaluations and
+                        results.
+                    </li>
+                </ul>
+
+                <h3>Amazon - Software Engineer II, Healthcare User Identity</h3>
+                <p><em>August 2022 – January 2024 | Seattle, WA</em></p>
+                <ul>
+                    <li>Designed and implemented a customer Health Program enrollment page that serves all Amazon Health
+                        Services.</li>
+                    <li>Authored a comprehensive design document for a customer account proxy service between Amazon and
+                        a
+                        major healthcare provider, overcoming initial resistance and saving 6 weeks of development time.
+                    </li>
+                    <li>Led the launch of Amazon Pharmacy's estimated insurance pricing validation service and authored
+                        operational standards, guidelines, and mechanisms, demonstrating effective leadership in the
+                        absence
+                        of the Sr. SDE.</li>
+                    <li>Developed Amazon Pharmacy estimated insurance pricing validation service and infrastructure.
+                        Developed and led integration with a downstream consumer.</li>
+                    <li>Developed an org-wide code as infrastructure framework to enforce operational standards, reduce
+                        boilerplate code, and increase infrastructure development velocity by up to 4 weeks.</li>
+                    <li>Guided a new team in implementing coding standards, code review mechanisms, SCRUM process, and
+                        infrastructure standards.</li>
+                    <li>Actively mentored junior engineers.</li>
+                </ul>
+
+                <h3>Amazon - Software Engineer, Human in the Loop ML/AI</h3>
+                <p><em>December 2021 – August 2022 | Seattle, WA</em></p>
+                <ul>
+                    <li>Served as the engineering point of contact for a commercial pilot program, resolving technical
+                        issues. The pilot program generated approximately one hundred thousand dollars in revenue.</li>
+                    <li>Implemented infrastructure and integration tests for a new AWS SageMaker GroundTruth VPC
+                        feature.
+                    </li>
+                    <li>Patched Log4J vulnerabilities in multiple Mechanical Turk legacy services.</li>
+                    <li>Patched bugs in AWS SageMaker GroundTruth Plus worker task count feature.</li>
+                    <li>Reduced the number of tickets in the on-call queue by approximately 600 tickets.</li>
+                    <li>Participated in routine on-call rotation.</li>
+                    <li>Mentored an intern who successfully completed their project early, contributed to AWS SageMaker
+                        GroundTruth Plus prototype, and received a return offer.</li>
+                </ul>
+
+                <h3>InfoTrust - Software Engineer</h3>
+                <p><em>April 2021 – December 2021 | Seattle, WA</em></p>
+                <ul>
+                    <li>Collaborated on developing, delivering, and maintaining Node.js and Java solutions with one
+                        other
+                        engineer, successfully launching full-stack products for several Global 100 clients.</li>
+                    <li>Architected, developed, and delivered Node.js solution for Global 100 client that improved
+                        performance over existing solution by ∼200x.</li>
+                    <li>Improved the performance of an internal web application by 10x through refactoring algorithmic
+                        inefficiencies and SQL queries.</li>
+                    <li>Developed micro-service in Node.js for an internal task processing system, leveraging existing
+                        services in the Google Cloud Platform such as App Engine, Cloud Functions, Cloud Run, Cloud
+                        Scheduler, and Cloud Pub/Sub.</li>
+                    <li>Developed scripts to automate workflows on various platforms (Google Analytics, Google Tag
+                        Manager,
+                        etc.) utilizing the appropriate Google APIs.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery App -->
+    <div class="app-window" id="gallery-app">
+        <div class="nav-bar">
+            <button class="back-btn" onclick="goHome()">◀ Back</button>
+            <div class="title">My Gallery</div>
+            <button class="close-btn" onclick="closeApp('gallery')">✕</button>
+        </div>
+        <div class="app-content">
+            <div class="gallery-container" id="gallery-container">
+                <div class="gallery-item" onclick="enlargeImage(this)">
+                    <img src="public/image-1.png" alt="Image 1">
+                </div>
+                <div class="gallery-item" onclick="enlargeImage(this)">
+                    <img src="public/image-2.png" alt="Image 2">
+                </div>
+                <div class="gallery-item" onclick="enlargeImage(this)">
+                    <img src="public/image-3.png" alt="Image 3">
+                </div>
+                <div class="gallery-item" onclick="enlargeImage(this)">
+                    <img src="public/image-4.png" alt="Image 4">
+                </div>
+                <div class="gallery-item" onclick="enlargeImage(this)">
+                    <img src="public/image-5.png" alt="Image 5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music App -->
+    <div class="app-window" id="music-app">
+        <div class="nav-bar">
+            <button class="back-btn" onclick="goHome()">◀ Back</button>
+            <div class="title">8-Bit Player</div>
+            <button class="close-btn" onclick="closeApp('music')">✕</button>
+        </div>
+        <div class="app-content">
+            <div class="music-player">
+                <h2>8-Bit Music Player</h2>
+                <p>Enjoy retro tunes generated in real-time!</p>
+
+                <div class="player-controls">
+                    <button class="player-btn" id="play-btn">Play</button>
+                    <button class="player-btn" id="stop-btn" disabled>Stop</button>
+                </div>
+
+                <div class="volume-control">
+                    <label for="volume-slider">Volume:</label>
+                    <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="50">
+                </div>
+
+                <div style="background: #000; color: #0f0; padding: 10px; font-family: 'Courier New', monospace; height: 80px; overflow-y: auto; margin-top: 20px;"
+                    id="audio-visualizer">
+                    [&gt;] 8-BIT MUSIC PLAYER v1.0<br>
+                    [&gt;] READY TO PLAY<br>
+                    <span id="status-text">[ ] Awaiting input...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Snake App -->
+    <div class="app-window" id="snake-app">
+        <div class="nav-bar">
+            <button class="back-btn" onclick="goHome()">◀ Back</button>
+            <div class="title">Snake Game</div>
+            <button class="close-btn" onclick="closeApp('snake')">✕</button>
+        </div>
+        <div class="app-content">
+            <div class="game-container">
+                <div class="game-header">
+                    <div>Score: <span id="snake-score">0</span></div>
+                    <button class="player-btn" id="start-snake-btn">Start</button>
+                </div>
+                <canvas id="snake-canvas" class="game-canvas" width="300" height="300"></canvas>
+                <div class="game-controls">
+                    <div class="control-row">
+                        <button class="control-btn" id="up-btn">↑</button>
+                    </div>
+                    <div class="control-row">
+                        <button class="control-btn" id="left-btn">←</button>
+                        <button class="control-btn" id="down-btn">↓</button>
+                        <button class="control-btn" id="right-btn">→</button>
+                    </div>
+                </div>
+                <p>Use the buttons to control the snake. Eat the food to grow and earn points.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Me App -->
+    <div class="app-window" id="about-app">
+        <div class="nav-bar">
+            <button class="back-btn" onclick="goHome()">◀ Back</button>
+            <div class="title">About Me</div>
+            <button class="close-btn" onclick="closeApp('about')">✕</button>
+        </div>
+        <div class="app-content">
+            <div class="about-me">
+                <h2>Interesting Facts</h2>
+                <ul>
+                    <li>I can solve a Rubik's cube in under 30 seconds</li>
+                    <li>I've traveled to 15+ countries across 4 continents</li>
+                    <li>I once built a robot that could play chess</li>
+                    <li>I brew my own beer as a hobby</li>
+                    <li>I've contributed to open source projects with over 10k stars</li>
+                    <li>AI hallucinated all of these :p</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // App management
+        function openApp(appName) {
+            // Hide home screen
+            document.getElementById('home-screen').style.display = 'none';
+
+            // Show the app
+            const appElement = document.getElementById(appName + '-app');
+            if (appElement) {
+                appElement.classList.add('active');
+
+                // Special initialization for apps that need it
+                if (appName === 'snake' && !window.snakeInitialized) {
+                    initSnakeGame();
+                    window.snakeInitialized = true;
+                }
+            }
+        }
+
+        function closeApp(appName) {
+            // Hide the app
+            const appElement = document.getElementById(appName + '-app');
+            if (appElement) {
+                appElement.classList.remove('active');
+            }
+
+            // Show home screen
+            document.getElementById('home-screen').style.display = 'grid';
+        }
+
+        function goHome() {
+            // Hide all apps
+            document.querySelectorAll('.app-window').forEach(app => {
+                app.classList.remove('active');
+            });
+
+            // Show home screen
+            document.getElementById('home-screen').style.display = 'grid';
+        }
+
+        // Snake Game Implementation
+        let snakeGame = null;
+        let snakeScore = 0;
+
+        function initSnakeGame() {
+            const canvas = document.getElementById('snake-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreElement = document.getElementById('snake-score');
+            const startButton = document.getElementById('start-snake-btn');
+
+            // Game constants
+            const gridSize = 15;
+            const tileCount = canvas.width / gridSize;
+
+            // Game state
+            let snake = [];
+            let food = {};
+            let dx = 0;
+            let dy = 0;
+            let gameRunning = false;
+            let gameLoop;
+
+            // Initialize game
+            function resetGame() {
+                // Reset snake
+                snake = [
+                    { x: 10, y: 10 },
+                    { x: 9, y: 10 },
+                    { x: 8, y: 10 }
+                ];
+
+                // Reset direction
+                dx = 1;
+                dy = 0;
+
+                // Place food
+                placeFood();
+
+                // Reset score
+                snakeScore = 0;
+                scoreElement.textContent = snakeScore;
+            }
+
+            // Place food at random location
+            function placeFood() {
+                let newFood;
+                let onSnake;
+
+                do {
+                    onSnake = false;
+                    newFood = {
+                        x: Math.floor(Math.random() * tileCount),
+                        y: Math.floor(Math.random() * tileCount)
+                    };
+
+                    // Check if food is on snake
+                    for (let i = 0; i < snake.length; i++) {
+                        if (snake[i].x === newFood.x && snake[i].y === newFood.y) {
+                            onSnake = true;
+                            break;
+                        }
+                    }
+                } while (onSnake);
+
+                food = newFood;
+            }
+
+            // Draw game elements
+            function draw() {
+                // Clear canvas
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw snake
+                ctx.fillStyle = 'lime';
+                for (let i = 0; i < snake.length; i++) {
+                    ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 2, gridSize - 2);
+                }
+
+                // Draw food
+                ctx.fillStyle = 'red';
+                ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+            }
+
+            // Update game state
+            function update() {
+                // Move snake
+                const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+                // Check collision with walls
+                if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                    gameOver();
+                    return;
+                }
+
+                // Check collision with self
+                for (let i = 0; i < snake.length; i++) {
+                    if (head.x === snake[i].x && head.y === snake[i].y) {
+                        gameOver();
+                        return;
+                    }
+                }
+
+                // Add new head
+                snake.unshift(head);
+
+                // Check if food is eaten
+                if (head.x === food.x && head.y === food.y) {
+                    // Increase score
+                    snakeScore += 10;
+                    scoreElement.textContent = snakeScore;
+
+                    // Place new food
+                    placeFood();
+                } else {
+                    // Remove tail
+                    snake.pop();
+                }
+            }
+
+            // Game loop
+            function gameStep() {
+                update();
+                draw();
+
+                if (gameRunning) {
+                    gameLoop = setTimeout(gameStep, 150);
+                }
+            }
+
+            // Change direction functions for buttons
+            function moveUp() {
+                if (gameRunning && dy === 0) {
+                    dx = 0;
+                    dy = -1;
+                }
+            }
+
+            function moveDown() {
+                if (gameRunning && dy === 0) {
+                    dx = 0;
+                    dy = 1;
+                }
+            }
+
+            function moveLeft() {
+                if (gameRunning && dx === 0) {
+                    dx = -1;
+                    dy = 0;
+                }
+            }
+
+            function moveRight() {
+                if (gameRunning && dx === 0) {
+                    dx = 1;
+                    dy = 0;
+                }
+            }
+
+            // Start game
+            function startGame() {
+                if (gameRunning) return;
+
+                resetGame();
+                gameRunning = true;
+                startButton.textContent = "Restart";
+
+                // Start game loop
+                gameStep();
+            }
+
+            // Game over
+            function gameOver() {
+                gameRunning = false;
+                clearTimeout(gameLoop);
+
+                // Display game over message in the app instead of alert
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.id = 'game-over-message';
+                gameOverMessage.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0, 0, 0, 0.8);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    text-align: center;
+                    z-index: 100;
+                `;
+                gameOverMessage.innerHTML = `
+                    <h3>Game Over!</h3>
+                    <p>Your score: ${snakeScore}</p>
+                    <button class="player-btn" style="margin-top: 10px;" onclick="this.parentElement.remove(); startGame();">Play Again</button>
+                `;
+                
+                // Add the game over message to the game container
+                document.querySelector('#snake-app .app-content').appendChild(gameOverMessage);
+                startButton.textContent = "Start";
+            }
+
+            // Button event listeners for click and touch
+            startButton.addEventListener('click', startGame);
+            startButton.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startGame();
+            });
+            
+            document.getElementById('up-btn').addEventListener('click', moveUp);
+            document.getElementById('up-btn').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveUp();
+            });
+            
+            document.getElementById('down-btn').addEventListener('click', moveDown);
+            document.getElementById('down-btn').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveDown();
+            });
+            
+            document.getElementById('left-btn').addEventListener('click', moveLeft);
+            document.getElementById('left-btn').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveLeft();
+            });
+            
+            document.getElementById('right-btn').addEventListener('click', moveRight);
+            document.getElementById('right-btn').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveRight();
+            });
+
+            // Initial draw
+            resetGame();
+            draw();
+        }
+
+        // 8-Bit Audio Player
+        let audioContext;
+        let isPlaying = false;
+        let isPaused = false;
+        let oscillatorNodes = [];
+        let gainNode;
+        let currentNoteIndex = 0;
+        let noteTimeouts = [];
+        let melodyStartTime = 0;
+        let pausedTime = 0;
+
+        // Initialize audio context
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioContext.createGain();
+                gainNode.connect(audioContext.destination);
+                updateVolume();
+            } catch (e) {
+                console.error('Web Audio API is not supported in this browser', e);
+            }
+        }
+
+        // Update volume from slider
+        function updateVolume() {
+            if (gainNode && audioContext) {
+                const volume = document.getElementById('volume-slider').value / 100;
+                gainNode.gain.value = volume;
+            }
+        }
+
+        // Play 8-bit note
+        function playNote(frequency, duration, type = 'square') {
+            if (!audioContext) return;
+
+            const oscillator = audioContext.createOscillator();
+            const envelope = audioContext.createGain();
+
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+
+            envelope.gain.setValueAtTime(0, audioContext.currentTime);
+            envelope.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            envelope.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+
+            oscillator.connect(envelope);
+            envelope.connect(gainNode);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+
+            oscillatorNodes.push(oscillator);
+
+            // Clean up
+            oscillator.onended = () => {
+                const index = oscillatorNodes.indexOf(oscillator);
+                if (index !== -1) oscillatorNodes.splice(index, 1);
+            };
+
+            return oscillator;
+        }
+
+        // Simple 8-bit melody (Super Mario-like)
+        const melody = [
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.15 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'G5', duration: 0.3 },
+            { note: 'G4', duration: 0.3 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'E4', duration: 0.2 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'B4', duration: 0.2 },
+            { note: 'A#4', duration: 0.15 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'G4', duration: 0.25 },
+            { note: 'E5', duration: 0.25 },
+            { note: 'G5', duration: 0.25 },
+            { note: 'A5', duration: 0.2 },
+            { note: 'F5', duration: 0.2 },
+            { note: 'G5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'D5', duration: 0.2 },
+            { note: 'B4', duration: 0.2 }
+        ];
+
+        // Note frequencies
+        const notes = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99, 'A5': 880.00, 'B5': 987.77
+        };
+
+        // Play 8-bit melody
+        function playMelody(fromIndex = 0) {
+            if (!audioContext) initAudio();
+            if (!audioContext) return;
+
+            // Clear any existing timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Play each note with a slight delay
+            let time = 0;
+            for (let i = fromIndex; i < melody.length; i++) {
+                const note = melody[i];
+                const timeout = setTimeout(() => {
+                    if (isPlaying && !isPaused) {
+                        playNote(notes[note.note], note.duration, 'square');
+
+                        // Update visualizer
+                        const visualizer = document.getElementById('audio-visualizer');
+                        const statusText = document.getElementById('status-text');
+                        statusText.textContent = `[>] Playing: ${note.note}`;
+                        visualizer.scrollTop = visualizer.scrollHeight;
+
+                        // Update current note index
+                        currentNoteIndex = i;
+                    }
+                }, time * 1000);
+
+                noteTimeouts.push(timeout);
+                time += note.duration + 0.05;
+            }
+
+            // Schedule next loop
+            const loopTimeout = setTimeout(() => {
+                if (isPlaying && !isPaused) {
+                    currentNoteIndex = 0;
+                    playMelody(0);
+                }
+            }, time * 1000);
+
+            noteTimeouts.push(loopTimeout);
+        }
+
+        // Play 8-bit music
+        function playMusic() {
+            if (isPlaying && !isPaused) return; // Already playing
+
+            isPlaying = true;
+            isPaused = false;
+            document.getElementById('play-btn').textContent = "Pause";
+            document.getElementById('stop-btn').disabled = false;
+
+            if (!audioContext) initAudio();
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Resume from where we left off or start from beginning
+            playMelody(currentNoteIndex);
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[>] Resumed playback';
+        }
+
+        // Pause music
+        function pauseMusic() {
+            isPaused = true;
+            document.getElementById('play-btn').textContent = "Play";
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[||] Paused';
+        }
+
+        // Stop music
+        function stopMusic() {
+            isPlaying = false;
+            isPaused = false;
+            currentNoteIndex = 0;
+            document.getElementById('play-btn').textContent = "Play";
+            document.getElementById('stop-btn').disabled = true;
+
+            // Clear all timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Stop all oscillators
+            oscillatorNodes.forEach(node => {
+                try {
+                    node.stop();
+                } catch (e) {
+                    // Ignore errors
+                }
+            });
+            oscillatorNodes = [];
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[ ] Stopped';
+        }
+
+        // Set up event listeners for music player
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('play-btn').addEventListener('click', function () {
+                if (isPlaying && !isPaused) {
+                    pauseMusic();
+                } else {
+                    playMusic();
+                }
+            });
+
+            document.getElementById('stop-btn').addEventListener('click', stopMusic);
+            document.getElementById('volume-slider').addEventListener('input', updateVolume);
+        });
+
+        // Update clock in status bar
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.querySelector('.status-bar span').textContent = `${hours}:${minutes}`;
+        }
+
+        setInterval(updateClock, 60000);
+        updateClock();
+        
+        // Gallery functionality
+        let startX = 0;
+        let currentX = 0;
+        let isSwiping = false;
+        let currentIndex = 0;
+        const images = [
+            'public/image-1.png',
+            'public/image-2.png',
+            'public/image-3.png',
+            'public/image-4.png',
+            'public/image-5.png'
+        ];
+        
+        // Function to enlarge image when clicked
+        function enlargeImage(element) {
+            const imgSrc = element.querySelector('img').src;
+            currentIndex = images.findIndex(img => imgSrc.includes(img));
+            
+            // Create overlay for enlarged image
+            const overlay = document.createElement('div');
+            overlay.id = 'image-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            // Create enlarged image
+            const enlargedImage = document.createElement('img');
+            enlargedImage.src = imgSrc;
+            enlargedImage.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 10px;
+                object-fit: contain;
+            `;
+            
+            // Create close button
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.cssText = `
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 30px;
+                cursor: pointer;
+            `;
+            
+            // Add event listeners for swipe
+            overlay.addEventListener('touchstart', handleTouchStart, false);
+            overlay.addEventListener('touchmove', handleTouchMove, false);
+            overlay.addEventListener('touchend', handleTouchEnd, false);
+            
+            // Add click to close
+            closeButton.onclick = function() {
+                document.body.removeChild(overlay);
+            };
+            
+            overlay.onclick = function(e) {
+                if (e.target === overlay) {
+                    document.body.removeChild(overlay);
+                }
+            };
+            
+            overlay.appendChild(enlargedImage);
+            overlay.appendChild(closeButton);
+            document.body.appendChild(overlay);
+        }
+        
+        // Touch handlers for swipe
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+        }
+        
+        function handleTouchMove(e) {
+            if (!isSwiping) return;
+            currentX = e.touches[0].clientX;
+        }
+        
+        function handleTouchEnd() {
+            if (!isSwiping) return;
+            isSwiping = false;
+            
+            const diff = startX - currentX;
+            const threshold = 50; // Minimum swipe distance
+            
+            // Remove the overlay
+            const overlay = document.getElementById('image-overlay');
+            
+            if (Math.abs(diff) > threshold) {
+                // Swiped left or right
+                if (diff > 0) {
+                    // Swiped left - next image
+                    currentIndex = (currentIndex + 1) % images.length;
+                } else {
+                    // Swiped right - previous image
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                }
+                
+                // Update the image
+                const img = overlay.querySelector('img');
+                img.src = images[currentIndex];
+            }
+        }
+    </script>
+</body>
+
+</html>

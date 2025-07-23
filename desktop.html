@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows XP Resume</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tahoma', 'Arial', sans-serif;
+        }
+
+        /* Mobile detection styles */
+        .mobile-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #008080;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .mobile-warning h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-warning p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .mobile-warning a {
+            color: white;
+            background: #0a246a;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-warning {
+                display: flex;
+            }
+
+            /* Hide desktop elements on mobile */
+            .desktop-icons,
+            .taskbar,
+            .start-menu,
+            .window,
+            #vibe-coded,
+            #screen-saver {
+                display: none !important;
+            }
+        }
+
+        body {
+            background: #008080 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23008080"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23006060" stroke-width="1"/></svg>');
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Desktop Icons */
+        .desktop-icons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .desktop-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .desktop-icon img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+        }
+
+        .desktop-icon span {
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            text-shadow: 1px 1px 1px black;
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to bottom, #0a246a, #a3c6f3);
+            border-top: 2px solid #ffffff;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .start-button {
+            height: 100%;
+            padding: 0 15px;
+            background: linear-gradient(to bottom, #4da080, #1c6e4d);
+            border-right: 1px solid #000;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 1px black;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(to bottom, #5db090, #2c7e5d);
+        }
+
+        .start-button img {
+            margin-right: 8px;
+        }
+
+        .taskbar-items {
+            display: flex;
+            height: 100%;
+            flex: 1;
+        }
+
+        .taskbar-item {
+            height: 100%;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #666;
+            cursor: pointer;
+            background: linear-gradient(to bottom, #3a7bc8, #a3c6f3);
+            color: white;
+            font-size: 12px;
+        }
+
+        .taskbar-item.active {
+            background: linear-gradient(to bottom, #a3c6f3, #3a7bc8);
+        }
+
+        .taskbar-item img {
+            margin-right: 8px;
+        }
+
+        .system-tray {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            background: linear-gradient(to bottom, #3a7bc8, #a3c6f3);
+            border-left: 1px solid #666;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Vibe Coded Indicator */
+        .vibe-coded {
+            position: absolute;
+            bottom: 50px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff00;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            z-index: 999;
+            display: block;
+        }
+
+        /* Carousel Styles */
+        #image-carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 1px solid #999;
+            background: #eee;
+        }
+
+        #carousel-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #prev-btn,
+        #next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #prev-btn {
+            left: 10px;
+        }
+
+        #next-btn {
+            right: 10px;
+        }
+
+        #prev-btn:hover,
+        #next-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        #image-counter {
+            font-weight: bold;
+            margin: 5px 0;
+            display: inline-block;
+        }
+
+        /* Windows */
+        .window {
+            position: absolute;
+            background: #ece9d8;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            min-width: 300px;
+            min-height: 200px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            display: none;
+            resize: both;
+            overflow: hidden;
+            /* Prevent scrolling */
+        }
+
+        .window.active {
+            display: block;
+            z-index: 100;
+        }
+
+        .window-header {
+            background: linear-gradient(to right, #0a246a, #a3c6f3);
+            color: white;
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .window-controls {
+            display: flex;
+        }
+
+        .window-control {
+            width: 20px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 2px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            background: #ece9d8;
+        }
+
+        .window-control.minimize {
+            font-size: 14px;
+        }
+
+        .window-control.close:hover {
+            background: #ff0000;
+            color: white;
+        }
+
+        .window-content {
+            padding: 15px;
+            height: calc(100% - 25px);
+            overflow: auto;
+            /* Allow scrolling for content that overflows */
+        }
+
+        /* Portfolio Content */
+
+        /* Start Menu */
+        .start-menu {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 300px;
+            background: #ece9d8;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            display: none;
+            z-index: 1001;
+        }
+
+        .start-menu.active {
+            display: block;
+        }
+
+        .start-menu-header {
+            background: linear-gradient(to right, #0a246a, #a3c6f3);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .start-menu-items {
+            padding: 10px;
+        }
+
+        .start-menu-item {
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .start-menu-item:hover {
+            background: #3a7bc8;
+            color: white;
+        }
+
+        .start-menu-item img {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Desktop Icons SVG Data */
+        .icon-computer {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="24" fill="%23a0a0a0" stroke="%23808080" stroke-width="1"/><rect x="12" y="14" width="24" height="16" fill="%23008080"/><rect x="6" y="34" width="36" height="2" fill="%23808080"/><rect x="14" y="6" width="20" height="2" fill="%23808080"/></svg>') center no-repeat;
+        }
+
+        .icon-documents {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M10,10 L30,10 L38,18 L38,40 L10,40 Z" fill="%23ffffff" stroke="%23808080" stroke-width="1"/><path d="M30,10 L30,18 L38,18" fill="%23d0d0d0" stroke="%23808080" stroke-width="1"/></svg>') center no-repeat;
+        }
+
+        .icon-pictures {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="24" fill="%23ffffff" stroke="%23808080" stroke-width="1"/><circle cx="24" cy="22" r="6" fill="%23008080"/><circle cx="18" cy="18" r="3" fill="%23ff0000"/><circle cx="30" cy="18" r="3" fill="%23ffff00"/></svg>') center no-repeat;
+        }
+
+        .icon-music {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M15,15 L15,35 L35,35 L35,20 L25,20 L25,15 Z" fill="%23ffffff" stroke="%23808080" stroke-width="1"/><circle cx="12" cy="35" r="3" fill="%23808080"/><circle cx="32" cy="35" r="3" fill="%23808080"/><path d="M35,20 Q40,15 35,10" fill="none" stroke="%23808080" stroke-width="2"/></svg>') center no-repeat;
+        }
+
+        .icon-internet {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="%23008080" stroke="%23808080" stroke-width="1"/><circle cx="24" cy="24" r="15" fill="%23ffffff"/><circle cx="24" cy="24" r="10" fill="%23008080"/><circle cx="24" cy="24" r="5" fill="%23ffffff"/></svg>') center no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+        <div class="desktop-icon" onclick="openWindow('resume')">
+            <div class="icon-documents" style="width:48px;height:48px;"></div>
+            <span>My Resume</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('my-computer')">
+            <div class="icon-computer" style="width:48px;height:48px;"></div>
+            <span>My Computer</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('documents')">
+            <div class="icon-documents" style="width:48px;height:48px;"></div>
+            <span>My Documents</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('pictures')">
+            <div class="icon-pictures" style="width:48px;height:48px;"></div>
+            <span>My Pictures</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('music')">
+            <div class="icon-music" style="width:48px;height:48px;"></div>
+            <span>My Music</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('snake')">
+            <div
+                style="width:48px;height:48px;background:white;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black;font-size:30px;">
+                S</div>
+            <span>Snake Game</span>
+        </div>
+        <div class="desktop-icon" onclick="openWindow('fun-facts')">
+            <div class="icon-pictures" style="width:48px;height:48px;"></div>
+            <span>Fun Facts</span>
+        </div>
+    </div>
+
+    <!-- My Computer Window -->
+    <div id="my-computer-window" class="window" style="top:20px;left:650px;width:500px;height:400px;">
+        <div class="window-header">
+            <span>My Computer</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>System Information</h2>
+            <p>Operating System: Windows XP Professional</p>
+            <p>Processor: Intel(R) Core(TM) i7 CPU</p>
+            <p>Memory (RAM): 16.0 GB</p>
+            <p>System Type: 64-bit Operating System</p>
+
+            <h2>Devices and Drives</h2>
+            <ul>
+                <li>Local Disk (C:) - 250 GB Free of 500 GB</li>
+                <li>DVD Drive (D:)</li>
+                <li>Network Drives</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Documents Window -->
+    <div id="documents-window" class="window" style="top:450px;left:650px;width:450px;height:350px;">
+        <div class="window-header">
+            <span>My Documents</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>Documents</h2>
+            <ul>
+                <li>Resume.pdf</li>
+                <li>Cover-Letter.doc</li>
+                <li>Project-Proposal.txt</li>
+                <li>Notes.txt</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pictures Window -->
+    <div id="pictures-window" class="window" style="top:200px;left:600px;width:500px;height:400px;">
+        <div class="window-header">
+            <span>My Pictures</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>Image Gallery</h2>
+            <div id="image-carousel"
+                style="position: relative; width: 100%; height: 250px; margin: 15px 0; overflow: hidden; border: 1px solid #999;">
+                <div id="carousel-container" style="position: absolute; width: 100%; height: 100%; display: flex;">
+                    <!-- Images from public/ will be loaded here dynamically -->
+                </div>
+                <button id="prev-btn"
+                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); padding: 5px 10px;">&lt;</button>
+                <button id="next-btn"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); padding: 5px 10px;">&gt;</button>
+            </div>
+            <div style="text-align: center;">
+                <span id="image-counter">0 / 0</span>
+            </div>
+            <p style="margin-top: 15px;">A carousel of my personal images from the public directory.</p>
+        </div>
+    </div>
+
+    <!-- Music Window -->
+    <div id="music-window" class="window" style="top:350px;left:500px;width:450px;height:350px;">
+        <div class="window-header">
+            <span>My Music</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>8-Bit Music Player</h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <button id="play-btn" style="padding: 8px 15px; margin: 5px;">Play 8-Bit Tune</button>
+                <button id="stop-btn" style="padding: 8px 15px; margin: 5px;" disabled>Stop</button>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="volume-slider">Volume:</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="50" style="width: 70%;">
+            </div>
+            <div style="background: #000; color: #0f0; padding: 10px; font-family: 'Courier New', monospace; height: 80px; overflow-y: auto;"
+                id="audio-visualizer">
+                [&gt;] 8-BIT MUSIC PLAYER v1.0<br>
+                [&gt;] READY TO PLAY<br>
+                <span id="status-text">[ ] Awaiting input...</span>
+            </div>
+            <p style="margin-top: 15px;">Click "Play" to hear a retro 8-bit tune generated in real-time!</p>
+        </div>
+    </div>
+
+    <!-- Snake Game Window -->
+    <div id="snake-window" class="window" style="top:20px;left:900px;width:500px;height:500px;">
+        <div class="window-header">
+            <span>Snake Game</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content" style="overflow: hidden;">
+            <div style="text-align: center; margin-bottom: 10px;">
+                <button id="start-snake-btn" style="padding: 5px 10px;">Start Game</button>
+                <span style="margin-left: 20px;">Score: <span id="snake-score">0</span></span>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <canvas id="snake-canvas" width="450" height="400"
+                    style="border: 1px solid #000; background: #000;"></canvas>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; text-align: center;">
+                <p>Use arrow keys to control the snake. Eat the food to grow and earn points.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fun Facts Window -->
+    <div id="fun-facts-window" class="window" style="top:350px;left:820px;width:400px;height:350px;">
+        <div class="window-header">
+            <span>Fun Facts About Me</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h2>Interesting Facts</h2>
+            <ul style="margin-top: 15px; padding-left: 20px;">
+                <li style="margin-bottom: 10px;">I can solve a Rubik's cube in under 30 seconds</li>
+                <li style="margin-bottom: 10px;">I've traveled to 15+ countries across 4 continents</li>
+                <li style="margin-bottom: 10px;">I once built a robot that could play chess</li>
+                <li style="margin-bottom: 10px;">I brew my own beer as a hobby</li>
+                <li style="margin-bottom: 10px;">I've contributed to open source projects with over 10k stars</li>
+                <li style="margin-bottom: 10px;">AI hallucinated all of these :p</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Resume Window -->
+    <div id="resume-window" class="window" style="top:10px;left:50px;width:700px;height:650px;">
+        <div class="window-header">
+            <span>Ryan Wang - Resume</span>
+            <div class="window-controls">
+                <div class="window-control minimize">_</div>
+                <div class="window-control close">X</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h1 style="text-align: center; color: #0a246a;">Ryan Wang</h1>
+            <p style="text-align: center;"><a href="mailto:krumbholz98@gmail.com">krumbholz98@gmail.com</a> | <a
+                    href="https://linkedin.com/in/ryanrawlingswang">linkedin.com/in/ryanrawlingswang</a> | <a
+                    href="https://github.com/ryanrawlingswang">github.com/ryanrawlingswang</a></p>
+
+            <hr style="margin: 15px 0; border: 1px solid #a3c6f3;">
+
+            <h2 style="color: #0a246a;">Skills</h2>
+            <ul>
+                <li><strong>Languages:</strong> Java, JavaScript/TypeScript, Python, Go</li>
+                <li><strong>Technologies:</strong> AWS (Lambda, ECS, DynamoDB, CDK, IAM, KMS, S3, etc), PostgreSQL,
+                    Node.JS, React, NextJS, Spring Boot, Express</li>
+            </ul>
+
+            <h2 style="color: #0a246a;">Experience</h2>
+
+            <h3>Stratus Softworks - Founder, CEO</h3>
+            <p><em>March 2024 – Present | Durham, NC</em></p>
+            <ul>
+                <li>Led end-to-end design, development, and production roll-out of an enterprise-grade credentialing
+                    SaaS platform, reducing client credentialing and enrollment times by 70% over manual processes using
+                    Next.js, TypeScript, React, and AWS.</li>
+                <li>Designed and implemented secure, scalable, Hipaa compliant workflows for provider credentialing,
+                    practice management, and document handling.</li>
+                <li>Designed and implemented a Hipaa compliant data vault for provider data leveraging an in-house
+                    tokenization layer that I built.</li>
+                <li>Salvaged critical Network Configuration Disaster Recovery project, preventing loss of major customer
+                    contract by rearchitecting the feature, integrating it with their systems, and delivering a
+                    functional solution 1.5 months ahead of schedule.</li>
+                <li>Implemented the disaster recovery product within 1.5 months, building a full CI/CD pipeline and
+                    performing rigorous testing, leveraging a very heavily async job processing flow with SQS, ECS,
+                    Dynamo, and SNS.</li>
+                <li>Introduced automated testing, security, and performance optimizations; added structured logging and
+                    metrics for observability.</li>
+                <li>Delivered multi-region, multi-stage CI/CD pipelines and established coding/infrastructure best
+                    practices for clients.</li>
+                <li>Led client discovery calls and technical workshops to define project requirements and strategy.</li>
+            </ul>
+
+            <h3>Atlassian - Software Engineer II, Confluence AI</h3>
+            <p><em>January 2024 – January 2025 | Durham, NC</em></p>
+            <ul>
+                <li>Decommissioned and migrated legacy LLM prompt template management service with zero downtime,
+                    refactoring code, cutting costs, and reducing latency by 400 ms on average; ensured seamless
+                    functionality for downstream users and reduced technical debt.</li>
+                <li>Led the multi-phase development and launch of the comments summary feature in Confluence, which
+                    provides concise LLM-generated summaries and actionable items. This involved experimentation, A/B
+                    testing, incorporating internal dogfooding feedback, and close collaboration with Product Managers
+                    to iterate on the feature.</li>
+                <li>Improved accuracy of comments summary feature from 21% to 98% by advocating for and implementing a
+                    structured output (JSON) approach, demonstrating impact through rigorous evaluations and results.
+                </li>
+            </ul>
+
+            <h3>Amazon - Software Engineer II, Healthcare User Identity</h3>
+            <p><em>August 2022 – January 2024 | Seattle, WA</em></p>
+            <ul>
+                <li>Designed and implemented a customer Health Program enrollment page that serves all Amazon Health
+                    Services.</li>
+                <li>Authored a comprehensive design document for a customer account proxy service between Amazon and a
+                    major healthcare provider, overcoming initial resistance and saving 6 weeks of development time.
+                </li>
+                <li>Led the launch of Amazon Pharmacy's estimated insurance pricing validation service and authored
+                    operational standards, guidelines, and mechanisms, demonstrating effective leadership in the absence
+                    of the Sr. SDE.</li>
+                <li>Developed Amazon Pharmacy estimated insurance pricing validation service and infrastructure.
+                    Developed and led integration with a downstream consumer.</li>
+                <li>Developed an org-wide code as infrastructure framework to enforce operational standards, reduce
+                    boilerplate code, and increase infrastructure development velocity by up to 4 weeks.</li>
+                <li>Guided a new team in implementing coding standards, code review mechanisms, SCRUM process, and
+                    infrastructure standards.</li>
+                <li>Actively mentored junior engineers.</li>
+            </ul>
+
+            <h3>Amazon - Software Engineer, Human in the Loop ML/AI</h3>
+            <p><em>December 2021 – August 2022 | Seattle, WA</em></p>
+            <ul>
+                <li>Served as the engineering point of contact for a commercial pilot program, resolving technical
+                    issues. The pilot program generated approximately one hundred thousand dollars in revenue.</li>
+                <li>Implemented infrastructure and integration tests for a new AWS SageMaker GroundTruth VPC feature.
+                </li>
+                <li>Patched Log4J vulnerabilities in multiple Mechanical Turk legacy services.</li>
+                <li>Patched bugs in AWS SageMaker GroundTruth Plus worker task count feature.</li>
+                <li>Reduced the number of tickets in the on-call queue by approximately 600 tickets.</li>
+                <li>Participated in routine on-call rotation.</li>
+                <li>Mentored an intern who successfully completed their project early, contributed to AWS SageMaker
+                    GroundTruth Plus prototype, and received a return offer.</li>
+            </ul>
+
+            <h3>InfoTrust - Software Engineer</h3>
+            <p><em>April 2021 – December 2021 | Seattle, WA</em></p>
+            <ul>
+                <li>Collaborated on developing, delivering, and maintaining Node.js and Java solutions with one other
+                    engineer, successfully launching full-stack products for several Global 100 clients.</li>
+                <li>Architected, developed, and delivered Node.js solution for Global 100 client that improved
+                    performance over existing solution by ∼200x.</li>
+                <li>Improved the performance of an internal web application by 10x through refactoring algorithmic
+                    inefficiencies and SQL queries.</li>
+                <li>Developed micro-service in Node.js for an internal task processing system, leveraging existing
+                    services in the Google Cloud Platform such as App Engine, Cloud Functions, Cloud Run, Cloud
+                    Scheduler, and Cloud Pub/Sub.</li>
+                <li>Developed scripts to automate workflows on various platforms (Google Analytics, Google Tag Manager,
+                    etc.) utilizing the appropriate Google APIs.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div id="start-menu" class="start-menu">
+        <div class="start-menu-header">Ryan Wang</div>
+        <div class="start-menu-items">
+            <div class="start-menu-item" onclick="openWindow('my-computer')">
+                <div class="icon-computer" style="width:24px;height:24px;"></div>
+                <span>My Computer</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('documents')">
+                <div class="icon-documents" style="width:24px;height:24px;"></div>
+                <span>My Documents</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('pictures')">
+                <div class="icon-pictures" style="width:24px;height:24px;"></div>
+                <span>My Pictures</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('music')">
+                <div class="icon-music" style="width:24px;height:24px;"></div>
+                <span>My Music</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('snake')">
+                <div
+                    style="width:24px;height:24px;background:white;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black;">
+                    S</div>
+                <span>Snake Game</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('fun-facts')">
+                <div class="icon-pictures" style="width:24px;height:24px;"></div>
+                <span>Fun Facts</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('resume')">
+                <div
+                    style="width:24px;height:24px;background:white;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black;">
+                    R</div>
+                <span>My Resume</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div id="start-button" class="start-button">
+            <span>Start</span>
+        </div>
+        <div class="taskbar-items">
+            <!-- Taskbar items will be added dynamically -->
+        </div>
+        <div class="system-tray">
+            <span id="clock">10:22 AM</span>
+        </div>
+    </div>
+
+    <!-- Vibe Coded Indicator -->
+    <div id="vibe-coded" class="vibe-coded" style="display: block;">Vibe coded with love &lt;3</div>
+
+    <!-- Mobile Warning -->
+    <div class="mobile-warning">
+        <h1>Desktop Experience Recommended</h1>
+        <p>This website is designed to emulate the Windows XP experience and works best on desktop devices. For the full
+            experience, please visit on a desktop computer.</p>
+        <p>Alternatively, you can view my professional profile on LinkedIn:</p>
+        <a href="https://linkedin.com/in/ryanrawlingswang" target="_blank">Visit LinkedIn Profile</a>
+    </div>
+
+    <!-- Screen Saver -->
+    <div id="screen-saver"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; display: none; z-index: 2000;">
+        <canvas id="screensaver-canvas"></canvas>
+        <div
+            style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: white; font-family: 'Courier New', monospace;">
+            Windows XP Screensaver - Move your mouse or press any key to exit
+        </div>
+    </div>
+
+    <script>
+        // Initialize clock
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            document.getElementById('clock').textContent = `${formattedHours}:${minutes} ${ampm}`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Window management
+        let activeWindow = null;
+        let zIndexCounter = 100;
+        const openWindows = new Set();
+
+        function updateTaskbar() {
+            const taskbarItems = document.querySelector('.taskbar-items');
+            taskbarItems.innerHTML = '';
+
+            openWindows.forEach(windowId => {
+                const windowElement = document.getElementById(windowId);
+                if (windowElement) {
+                    const title = windowElement.querySelector('.window-header span').textContent;
+                    const taskbarItem = document.createElement('div');
+                    taskbarItem.className = 'taskbar-item';
+                    taskbarItem.dataset.window = windowId;
+                    taskbarItem.innerHTML = `<span>${title}</span>`;
+
+                    if (windowElement.classList.contains('active')) {
+                        taskbarItem.classList.add('active');
+                    }
+
+                    taskbarItem.addEventListener('click', () => {
+                        if (windowElement.classList.contains('active')) {
+                            minimizeWindow(windowId);
+                        } else {
+                            openWindow(windowId.replace('-window', ''));
+                        }
+                    });
+
+                    taskbarItems.appendChild(taskbarItem);
+                }
+            });
+        }
+
+        function openWindow(windowId) {
+            const window = document.getElementById(windowId + '-window');
+            if (window) {
+                window.classList.add('active');
+                window.style.zIndex = ++zIndexCounter;
+                activeWindow = window;
+                openWindows.add(windowId + '-window');
+
+                // Special handling for snake game to ensure it initializes
+                if (windowId === 'snake' && !snakeGame) {
+                    setTimeout(initSnakeGame, 100);
+                }
+
+                // Update taskbar
+                updateTaskbar();
+            }
+
+            // Close start menu if open
+            document.getElementById('start-menu').classList.remove('active');
+        }
+
+        function closeWindow(windowId) {
+            const window = document.getElementById(windowId);
+            if (window) {
+                window.classList.remove('active');
+                openWindows.delete(windowId);
+
+                // Update taskbar
+                updateTaskbar();
+            }
+        }
+
+        function minimizeWindow(windowId) {
+            const window = document.getElementById(windowId);
+            if (window) {
+                window.classList.remove('active');
+
+                // Update taskbar
+                updateTaskbar();
+            }
+        }
+
+        // Make windows draggable and focusable
+        document.querySelectorAll('.window').forEach(window => {
+            // Add focus handling
+            window.addEventListener('click', function () {
+                // Bring window to front
+                this.style.zIndex = ++zIndexCounter;
+                activeWindow = this;
+
+                // Update taskbar to show active window
+                updateTaskbar();
+            });
+
+            // Keep the existing drag handling
+            const header = window.querySelector('.window-header');
+            if (header) {
+                header.addEventListener('mousedown', function (e) {
+                    const window = this.parentElement;
+                    activeWindow = window;
+                    window.style.zIndex = ++zIndexCounter;
+                    openWindows.add(window.id);
+
+                    // Update taskbar
+                    updateTaskbar();
+
+                    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+                    // Get the mouse cursor position at startup
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+
+                    // Call a function whenever the cursor moves
+                    document.onmousemove = function (e) {
+                        // Calculate the new cursor position
+                        pos1 = pos3 - e.clientX;
+                        pos2 = pos4 - e.clientY;
+                        pos3 = e.clientX;
+                        pos4 = e.clientY;
+
+                        // Set the element's new position
+                        window.style.top = (window.offsetTop - pos2) + "px";
+                        window.style.left = (window.offsetLeft - pos1) + "px";
+                    };
+
+                    // Stop moving when mouse button is released
+                    document.onmouseup = function () {
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                    };
+                });
+            }
+        });
+
+        // Start menu toggle
+        document.getElementById('start-button').addEventListener('click', function (e) {
+            e.stopPropagation();
+            const startMenu = document.getElementById('start-menu');
+            startMenu.classList.toggle('active');
+        });
+
+        // Close start menu when clicking elsewhere
+        document.addEventListener('click', function (e) {
+            const startMenu = document.getElementById('start-menu');
+            const startButton = document.getElementById('start-button');
+
+            if (!startMenu.contains(e.target) && e.target !== startButton) {
+                startMenu.classList.remove('active');
+            }
+        });
+
+        // Window controls
+        document.querySelectorAll('.window-control.close').forEach(control => {
+            control.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const window = this.closest('.window');
+                closeWindow(window.id);
+            });
+        });
+
+        document.querySelectorAll('.window-control.minimize').forEach(control => {
+            control.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const window = this.closest('.window');
+                minimizeWindow(window.id);
+            });
+        });
+
+        // We've moved this functionality to the updateTaskbar function
+
+        // Vibe Coded Indicator and Screen Saver
+        let inactivityTimer;
+        let screensaverActive = false;
+
+        // Show vibe coded indicator
+        function showVibeCodedIndicator() {
+            const vibeCoded = document.getElementById('vibe-coded');
+            vibeCoded.style.display = 'block';
+            // No longer automatically hide the indicator
+        }
+
+        // Initialize screen saver
+        function initScreensaver() {
+            const canvas = document.getElementById('screensaver-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size to match window
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Particle system for screensaver
+            const particles = [];
+            const particleCount = 100;
+
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    size: Math.random() * 3 + 1,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+
+            // Animation loop
+            function animate() {
+                if (!screensaverActive) return;
+
+                // Clear canvas with slight fade effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Update and draw particles
+                particles.forEach(p => {
+                    // Update position
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Bounce off edges
+                    if (p.x <= 0 || p.x >= canvas.width) p.vx *= -1;
+                    if (p.y <= 0 || p.y >= canvas.height) p.vy *= -1;
+
+                    // Draw particle
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            // Start animation
+            animate();
+        }
+
+        // Show screen saver
+        function showScreensaver() {
+            if (screensaverActive) return;
+
+            screensaverActive = true;
+            document.getElementById('screen-saver').style.display = 'block';
+            initScreensaver();
+        }
+
+        // Hide screen saver
+        function hideScreensaver() {
+            screensaverActive = false;
+            document.getElementById('screen-saver').style.display = 'none';
+        }
+
+        // Reset inactivity timer
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            hideScreensaver();
+            inactivityTimer = setTimeout(showScreensaver, 10000); // 10 seconds
+        }
+
+        // Set up event listeners for user activity
+        function setupActivityListeners() {
+            // Mouse movement
+            document.addEventListener('mousemove', resetInactivityTimer);
+
+            // Key press
+            document.addEventListener('keydown', resetInactivityTimer);
+
+            // Click
+            document.addEventListener('click', resetInactivityTimer);
+
+            // Touch
+            document.addEventListener('touchstart', resetInactivityTimer);
+
+            // Initialize timer
+            resetInactivityTimer();
+        }
+
+        // Snake Game Implementation
+        let snakeGame = null;
+        let snakeScore = 0;
+
+        function initSnakeGame() {
+            const canvas = document.getElementById('snake-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreElement = document.getElementById('snake-score');
+            const startButton = document.getElementById('start-snake-btn');
+
+            // Game constants
+            const gridSize = 20;
+            const tileCount = canvas.width / gridSize;
+
+            // Game state
+            let snake = [];
+            let food = {};
+            let dx = 0;
+            let dy = 0;
+            let gameRunning = false;
+            let gameLoop;
+
+            // Initialize game
+            function resetGame() {
+                // Reset snake
+                snake = [
+                    { x: 10, y: 10 },
+                    { x: 9, y: 10 },
+                    { x: 8, y: 10 }
+                ];
+
+                // Reset direction
+                dx = 1;
+                dy = 0;
+
+                // Place food
+                placeFood();
+
+                // Reset score
+                snakeScore = 0;
+                scoreElement.textContent = snakeScore;
+            }
+
+            // Place food at random location
+            function placeFood() {
+                let newFood;
+                let onSnake;
+
+                do {
+                    onSnake = false;
+                    newFood = {
+                        x: Math.floor(Math.random() * tileCount),
+                        y: Math.floor(Math.random() * tileCount)
+                    };
+
+                    // Check if food is on snake
+                    for (let i = 0; i < snake.length; i++) {
+                        if (snake[i].x === newFood.x && snake[i].y === newFood.y) {
+                            onSnake = true;
+                            break;
+                        }
+                    }
+                } while (onSnake);
+
+                food = newFood;
+            }
+
+            // Draw game elements
+            function draw() {
+                // Clear canvas
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw snake
+                ctx.fillStyle = 'lime';
+                for (let i = 0; i < snake.length; i++) {
+                    ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 2, gridSize - 2);
+                }
+
+                // Draw food
+                ctx.fillStyle = 'red';
+                ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+            }
+
+            // Update game state
+            function update() {
+                // Move snake
+                const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+                // Check collision with walls
+                if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                    gameOver();
+                    return;
+                }
+
+                // Check collision with self
+                for (let i = 0; i < snake.length; i++) {
+                    if (head.x === snake[i].x && head.y === snake[i].y) {
+                        gameOver();
+                        return;
+                    }
+                }
+
+                // Add new head
+                snake.unshift(head);
+
+                // Check if food is eaten
+                if (head.x === food.x && head.y === food.y) {
+                    // Increase score
+                    snakeScore += 10;
+                    scoreElement.textContent = snakeScore;
+
+                    // Place new food
+                    placeFood();
+                } else {
+                    // Remove tail
+                    snake.pop();
+                }
+            }
+
+            // Game loop
+            function gameStep() {
+                update();
+                draw();
+
+                if (gameRunning) {
+                    gameLoop = setTimeout(gameStep, 150);
+                }
+            }
+
+            // Handle keyboard input
+            function changeDirection(e) {
+                if (!gameRunning) return;
+
+                // Prevent reverse direction
+                switch (e.key) {
+                    case 'ArrowUp':
+                        if (dy === 0) {
+                            dx = 0;
+                            dy = -1;
+                        }
+                        break;
+                    case 'ArrowDown':
+                        if (dy === 0) {
+                            dx = 0;
+                            dy = 1;
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        if (dx === 0) {
+                            dx = -1;
+                            dy = 0;
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if (dx === 0) {
+                            dx = 1;
+                            dy = 0;
+                        }
+                        break;
+                }
+            }
+
+            // Start game
+            function startGame() {
+                if (gameRunning) return;
+
+                resetGame();
+                gameRunning = true;
+                startButton.textContent = "Restart Game";
+
+                // Add event listener for keyboard
+                document.addEventListener('keydown', changeDirection);
+
+                // Start game loop
+                gameStep();
+            }
+
+            // Game over
+            function gameOver() {
+                gameRunning = false;
+                clearTimeout(gameLoop);
+                document.removeEventListener('keydown', changeDirection);
+
+                // Display game over message in the game window instead of alert
+                // First, remove any existing game over message
+                const existingMessage = document.getElementById('game-over-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.id = 'game-over-message';
+                gameOverMessage.style.position = 'absolute';
+                gameOverMessage.style.top = '50%';
+                gameOverMessage.style.left = '50%';
+                gameOverMessage.style.transform = 'translate(-50%, -50%)';
+                gameOverMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                gameOverMessage.style.color = 'white';
+                gameOverMessage.style.padding = '20px';
+                gameOverMessage.style.borderRadius = '10px';
+                gameOverMessage.style.textAlign = 'center';
+                gameOverMessage.style.zIndex = '1000'; // Ensure it's above the canvas
+                gameOverMessage.innerHTML = `
+                    <h2>Game Over!</h2>
+                    <p>Your score: ${snakeScore}</p>
+                    <button id="restart-button" style="padding: 8px 15px; margin-top: 10px; cursor: pointer;">Play Again</button>
+                `;
+
+                // Add to snake game window content
+                const windowContent = document.querySelector('#snake-window .window-content');
+                windowContent.style.position = 'relative'; // Ensure relative positioning for absolute child
+                windowContent.appendChild(gameOverMessage);
+
+                // Add event listener to restart button
+                document.getElementById('restart-button').addEventListener('click', function (e) {
+                    e.stopPropagation(); // Prevent event from bubbling to window
+                    gameOverMessage.remove();
+                    startGame();
+                });
+            }
+
+            // Button event
+            startButton.addEventListener('click', startGame);
+
+            // Initial draw
+            resetGame();
+            draw();
+        }
+
+        // 8-Bit Audio Player
+        let audioContext;
+        let isPlaying = false;
+        let isPaused = false;
+        let oscillatorNodes = [];
+        let gainNode;
+        let currentNoteIndex = 0;
+        let noteTimeouts = [];
+        let melodyStartTime = 0;
+        let pausedTime = 0;
+
+        // Initialize audio context
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioContext.createGain();
+                gainNode.connect(audioContext.destination);
+                updateVolume();
+            } catch (e) {
+                console.error('Web Audio API is not supported in this browser', e);
+            }
+        }
+
+        // Update volume from slider
+        function updateVolume() {
+            if (gainNode && audioContext) {
+                const volume = document.getElementById('volume-slider').value / 100;
+                gainNode.gain.value = volume;
+            }
+        }
+
+        // Play 8-bit note
+        function playNote(frequency, duration, type = 'square') {
+            if (!audioContext) return;
+
+            const oscillator = audioContext.createOscillator();
+            const envelope = audioContext.createGain();
+
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+
+            envelope.gain.setValueAtTime(0, audioContext.currentTime);
+            envelope.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            envelope.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+
+            oscillator.connect(envelope);
+            envelope.connect(gainNode);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+
+            oscillatorNodes.push(oscillator);
+
+            // Clean up
+            oscillator.onended = () => {
+                const index = oscillatorNodes.indexOf(oscillator);
+                if (index !== -1) oscillatorNodes.splice(index, 1);
+            };
+
+            return oscillator;
+        }
+
+        // Simple 8-bit melody (Super Mario-like)
+        const melody = [
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.15 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'G5', duration: 0.3 },
+            { note: 'G4', duration: 0.3 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'E4', duration: 0.2 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'B4', duration: 0.2 },
+            { note: 'A#4', duration: 0.15 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'G4', duration: 0.25 },
+            { note: 'E5', duration: 0.25 },
+            { note: 'G5', duration: 0.25 },
+            { note: 'A5', duration: 0.2 },
+            { note: 'F5', duration: 0.2 },
+            { note: 'G5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'D5', duration: 0.2 },
+            { note: 'B4', duration: 0.2 }
+        ];
+
+        // Note frequencies
+        const notes = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99, 'A5': 880.00, 'B5': 987.77
+        };
+
+        // Play 8-bit melody
+        function playMelody(fromIndex = 0) {
+            if (!audioContext) initAudio();
+            if (!audioContext) return;
+
+            // Clear any existing timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Play each note with a slight delay
+            let time = 0;
+            for (let i = fromIndex; i < melody.length; i++) {
+                const note = melody[i];
+                const timeout = setTimeout(() => {
+                    if (isPlaying && !isPaused) {
+                        playNote(notes[note.note], note.duration, 'square');
+
+                        // Update visualizer
+                        const visualizer = document.getElementById('audio-visualizer');
+                        const statusText = document.getElementById('status-text');
+                        statusText.textContent = `[>] Playing: ${note.note}`;
+                        visualizer.scrollTop = visualizer.scrollHeight;
+
+                        // Update current note index
+                        currentNoteIndex = i;
+                    }
+                }, time * 1000);
+
+                noteTimeouts.push(timeout);
+                time += note.duration + 0.05;
+            }
+
+            // Schedule next loop
+            const loopTimeout = setTimeout(() => {
+                if (isPlaying && !isPaused) {
+                    currentNoteIndex = 0;
+                    playMelody(0);
+                }
+            }, time * 1000);
+
+            noteTimeouts.push(loopTimeout);
+        }
+
+        // Play 8-bit music
+        function playMusic() {
+            if (isPlaying && !isPaused) return; // Already playing
+
+            isPlaying = true;
+            isPaused = false;
+            document.getElementById('play-btn').textContent = "Pause";
+            document.getElementById('stop-btn').disabled = false;
+
+            if (!audioContext) initAudio();
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Resume from where we left off or start from beginning
+            playMelody(currentNoteIndex);
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[>] Resumed playback';
+        }
+
+        // Pause music
+        function pauseMusic() {
+            isPaused = true;
+            document.getElementById('play-btn').textContent = "Play";
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[||] Paused';
+        }
+
+        // Stop music
+        function stopMusic() {
+            isPlaying = false;
+            isPaused = false;
+            currentNoteIndex = 0;
+            document.getElementById('play-btn').textContent = "Play";
+            document.getElementById('stop-btn').disabled = true;
+
+            // Clear all timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Stop all oscillators
+            oscillatorNodes.forEach(node => {
+                try {
+                    node.stop();
+                } catch (e) {
+                    // Ignore errors
+                }
+            });
+            oscillatorNodes = [];
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[ ] Stopped';
+        }
+
+        // Image Gallery Data - Loading actual images from public directory
+        const galleryImages = [
+            "public/image-1.png",
+            "public/image-2.png",
+            "public/image-3.png",
+            "public/image-4.png",
+            "public/image-5.png",
+        ];
+
+        // Image Carousel Implementation
+        let currentImageIndex = 0;
+
+        function initCarousel() {
+            const container = document.getElementById('carousel-container');
+            const counter = document.getElementById('image-counter');
+
+            // Clear the container
+            container.innerHTML = '';
+
+            // Create slides for each image
+            galleryImages.forEach((imgSrc, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.style.minWidth = '100%';
+                slide.style.height = '100%';
+                slide.style.display = 'flex';
+                slide.style.alignItems = 'center';
+                slide.style.justifyContent = 'center';
+
+                // Create an actual img tag for the image
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.objectFit = 'contain';
+                img.alt = `Gallery Image ${index + 1}`;
+
+                slide.appendChild(img);
+                container.appendChild(slide);
+            });
+
+            // Update counter
+            counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function showImage(index) {
+            const container = document.getElementById('carousel-container');
+            const counter = document.getElementById('image-counter');
+
+            // Update current index with wrapping
+            currentImageIndex = ((index % galleryImages.length) + galleryImages.length) % galleryImages.length;
+
+            // Move the container to show the current image
+            container.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+
+            // Update counter
+            counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function nextImage() {
+            showImage(currentImageIndex + 1);
+        }
+
+        function prevImage() {
+            showImage(currentImageIndex - 1);
+        }
+
+        // Open default windows
+        window.addEventListener('load', function () {
+            // Use setTimeout to ensure DOM is fully ready
+            setTimeout(function () {
+                openWindow('resume');
+                openWindow('fun-facts');
+                openWindow('pictures');
+                openWindow('snake');
+                initSnakeGame();
+
+                // Initialize vibe coded indicator and screen saver
+                showVibeCodedIndicator();
+                setupActivityListeners();
+
+                // Initialize audio and set up event listeners for music player
+                initAudio();
+                document.getElementById('play-btn').addEventListener('click', function () {
+                    if (isPlaying && !isPaused) {
+                        pauseMusic();
+                    } else {
+                        playMusic();
+                    }
+                });
+                document.getElementById('stop-btn').addEventListener('click', stopMusic);
+                document.getElementById('volume-slider').addEventListener('input', updateVolume);
+
+                // Initialize image carousel
+                initCarousel();
+                document.getElementById('next-btn').addEventListener('click', nextImage);
+                document.getElementById('prev-btn').addEventListener('click', prevImage);
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
