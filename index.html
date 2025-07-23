@@ -275,7 +275,8 @@
             box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
             display: none;
             resize: both;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden;
+            /* Prevent scrolling */
         }
 
         .window.active {
@@ -325,7 +326,8 @@
         .window-content {
             padding: 15px;
             height: calc(100% - 25px);
-            overflow: auto; /* Allow scrolling for content that overflows */
+            overflow: auto;
+            /* Allow scrolling for content that overflows */
         }
 
         /* Portfolio Content */
@@ -701,7 +703,7 @@
 
     <!-- Start Menu -->
     <div id="start-menu" class="start-menu">
-        <div class="start-menu-header">Ryan Krumbholz</div>
+        <div class="start-menu-header">Ryan Wang</div>
         <div class="start-menu-items">
             <div class="start-menu-item" onclick="openWindow('my-computer')">
                 <div class="icon-computer" style="width:24px;height:24px;"></div>
@@ -757,7 +759,8 @@
     <!-- Mobile Warning -->
     <div class="mobile-warning">
         <h1>Desktop Experience Recommended</h1>
-        <p>This website is designed to emulate the Windows XP experience and works best on desktop devices. For the full experience, please visit on a desktop computer.</p>
+        <p>This website is designed to emulate the Windows XP experience and works best on desktop devices. For the full
+            experience, please visit on a desktop computer.</p>
         <p>Alternatively, you can view my professional profile on LinkedIn:</p>
         <a href="https://linkedin.com/in/ryanrawlingswang" target="_blank">Visit LinkedIn Profile</a>
     </div>
@@ -1106,14 +1109,14 @@
             function placeFood() {
                 let newFood;
                 let onSnake;
-                
+
                 do {
                     onSnake = false;
                     newFood = {
                         x: Math.floor(Math.random() * tileCount),
                         y: Math.floor(Math.random() * tileCount)
                     };
-                    
+
                     // Check if food is on snake
                     for (let i = 0; i < snake.length; i++) {
                         if (snake[i].x === newFood.x && snake[i].y === newFood.y) {
@@ -1122,7 +1125,7 @@
                         }
                     }
                 } while (onSnake);
-                
+
                 food = newFood;
             }
 
@@ -1242,14 +1245,14 @@
                 gameRunning = false;
                 clearTimeout(gameLoop);
                 document.removeEventListener('keydown', changeDirection);
-                
+
                 // Display game over message in the game window instead of alert
                 // First, remove any existing game over message
                 const existingMessage = document.getElementById('game-over-message');
                 if (existingMessage) {
                     existingMessage.remove();
                 }
-                
+
                 const gameOverMessage = document.createElement('div');
                 gameOverMessage.id = 'game-over-message';
                 gameOverMessage.style.position = 'absolute';
@@ -1267,14 +1270,14 @@
                     <p>Your score: ${snakeScore}</p>
                     <button id="restart-button" style="padding: 8px 15px; margin-top: 10px; cursor: pointer;">Play Again</button>
                 `;
-                
+
                 // Add to snake game window content
                 const windowContent = document.querySelector('#snake-window .window-content');
                 windowContent.style.position = 'relative'; // Ensure relative positioning for absolute child
                 windowContent.appendChild(gameOverMessage);
-                
+
                 // Add event listener to restart button
-                document.getElementById('restart-button').addEventListener('click', function(e) {
+                document.getElementById('restart-button').addEventListener('click', function (e) {
                     e.stopPropagation(); // Prevent event from bubbling to window
                     gameOverMessage.remove();
                     startGame();
