@@ -804,11 +804,11 @@
                 // Bring window to front
                 this.style.zIndex = ++zIndexCounter;
                 activeWindow = this;
-                
+
                 // Update taskbar to show active window
                 updateTaskbar();
             });
-            
+
             // Keep the existing drag handling
             const header = window.querySelector('.window-header');
             if (header) {
@@ -1367,7 +1367,10 @@
         // Image Gallery Data - Loading actual images from public directory
         const galleryImages = [
             "public/image-1.png",
-            "public/image-2.png"
+            "public/image-2.png",
+            "public/image-3.png",
+            "public/image-4.png",
+            "public/image-5.png",
         ];
 
         // Image Carousel Implementation
@@ -1433,8 +1436,9 @@
             // Use setTimeout to ensure DOM is fully ready
             setTimeout(function () {
                 openWindow('resume');
-                openWindow('snake');
                 openWindow('fun-facts');
+                openWindow('pictures');
+                openWindow('snake');
                 initSnakeGame();
 
                 // Initialize vibe coded indicator and screen saver
