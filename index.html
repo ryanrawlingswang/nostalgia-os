@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows XP Portfolio</title>
+    <title>Windows XP Resume</title>
     <style>
         * {
             margin: 0;
@@ -128,6 +128,86 @@
             font-size: 12px;
         }
 
+        /* Vibe Coded Indicator */
+        .vibe-coded {
+            position: absolute;
+            bottom: 50px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff00;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            z-index: 999;
+            display: block;
+        }
+
+        /* Carousel Styles */
+        #image-carousel {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 1px solid #999;
+            background: #eee;
+        }
+
+        #carousel-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #prev-btn,
+        #next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #prev-btn {
+            left: 10px;
+        }
+
+        #next-btn {
+            right: 10px;
+        }
+
+        #prev-btn:hover,
+        #next-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        #image-counter {
+            font-weight: bold;
+            margin: 5px 0;
+            display: inline-block;
+        }
+
         /* Windows */
         .window {
             position: absolute;
@@ -193,54 +273,6 @@
         }
 
         /* Portfolio Content */
-        .portfolio-content h1 {
-            color: #0a246a;
-            border-bottom: 1px solid #a3c6f3;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .portfolio-content h2 {
-            color: #0a246a;
-            margin: 15px 0 10px;
-        }
-
-        .portfolio-content p {
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .skill-item {
-            background: #a3c6f3;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-size: 12px;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .project-card {
-            border: 1px solid #a3c6f3;
-            padding: 10px;
-            background: white;
-        }
-
-        .project-card h3 {
-            color: #0a246a;
-            margin-bottom: 5px;
-        }
 
         /* Start Menu */
         .start-menu {
@@ -314,10 +346,6 @@
 <body>
     <!-- Desktop Icons -->
     <div class="desktop-icons">
-        <div class="desktop-icon" onclick="openWindow('portfolio')">
-            <div class="icon-internet" style="width:48px;height:48px;"></div>
-            <span>Portfolio</span>
-        </div>
         <div class="desktop-icon" onclick="openWindow('resume')">
             <div class="icon-documents" style="width:48px;height:48px;"></div>
             <span>My Resume</span>
@@ -344,67 +372,9 @@
                 S</div>
             <span>Snake Game</span>
         </div>
-        <div class="desktop-icon" onclick="openWindow('meme')">
+        <div class="desktop-icon" onclick="openWindow('fun-facts')">
             <div class="icon-pictures" style="width:48px;height:48px;"></div>
-            <span>Fun Meme</span>
-        </div>
-    </div>
-
-    <!-- Portfolio Window -->
-    <div id="portfolio-window" class="window" style="top:20px;left:20px;width:600px;height:500px;">
-        <div class="window-header">
-            <span>Portfolio - Ryan Krumbholz</span>
-            <div class="window-controls">
-                <div class="window-control minimize">_</div>
-                <div class="window-control close">X</div>
-            </div>
-        </div>
-        <div class="window-content portfolio-content">
-            <h1>Ryan Krumbholz - Software Developer</h1>
-
-            <h2>About Me</h2>
-            <p>Welcome to my personal portfolio! I'm a passionate software developer with expertise in full-stack web
-                development, mobile applications, and system architecture. I enjoy solving complex problems and creating
-                intuitive user experiences.</p>
-
-            <h2>Skills</h2>
-            <div class="skills-list">
-                <div class="skill-item">JavaScript</div>
-                <div class="skill-item">Python</div>
-                <div class="skill-item">React</div>
-                <div class="skill-item">Node.js</div>
-                <div class="skill-item">HTML/CSS</div>
-                <div class="skill-item">SQL</div>
-                <div class="skill-item">Git</div>
-                <div class="skill-item">AWS</div>
-                <div class="skill-item">Docker</div>
-                <div class="skill-item">REST APIs</div>
-            </div>
-
-            <h2>Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>E-commerce Platform</h3>
-                    <p>Full-featured online shopping experience with payment processing and inventory management.</p>
-                </div>
-                <div class="project-card">
-                    <h3>Task Management App</h3>
-                    <p>Collaborative task management solution with real-time updates and mobile support.</p>
-                </div>
-                <div class="project-card">
-                    <h3>Data Visualization Dashboard</h3>
-                    <p>Interactive dashboard for analyzing business metrics with customizable reports.</p>
-                </div>
-                <div class="project-card">
-                    <h3>Mobile Weather App</h3>
-                    <p>Location-based weather application with forecasts and severe weather alerts.</p>
-                </div>
-            </div>
-
-            <h2>Contact</h2>
-            <p>Email: ryan@example.com</p>
-            <p>LinkedIn: linkedin.com/in/ryankrumbholz</p>
-            <p>GitHub: github.com/ryankrumbholz</p>
+            <span>Fun Facts</span>
         </div>
     </div>
 
@@ -454,7 +424,7 @@
     </div>
 
     <!-- Pictures Window -->
-    <div id="pictures-window" class="window" style="top:20px;left:1200px;width:400px;height:300px;">
+    <div id="pictures-window" class="window" style="top:20px;left:1200px;width:500px;height:400px;">
         <div class="window-header">
             <span>My Pictures</span>
             <div class="window-controls">
@@ -464,13 +434,30 @@
         </div>
         <div class="window-content">
             <h2>Image Gallery</h2>
-            <p>This would normally show your pictures, but this is a demo.</p>
-            <p>In a real implementation, you could display a gallery of your work or personal photos.</p>
+            <p>Loading images from @gallery/** directory</p>
+            <div id="image-carousel"
+                style="position: relative; width: 100%; height: 250px; margin: 15px 0; overflow: hidden; border: 1px solid #999;">
+                <div id="carousel-container" style="position: absolute; width: 100%; height: 100%; display: flex;">
+                    <!-- Images from @gallery/** will be loaded here dynamically -->
+                    <div class="carousel-slide"
+                        style="min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #eee;">
+                        <p>Loading images from @gallery/**...</p>
+                    </div>
+                </div>
+                <button id="prev-btn"
+                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); padding: 5px 10px;">&lt;</button>
+                <button id="next-btn"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); padding: 5px 10px;">&gt;</button>
+            </div>
+            <div style="text-align: center;">
+                <span id="image-counter">1 / 1</span>
+            </div>
+            <p style="margin-top: 15px;">A carousel of my personal images from the gallery directory.</p>
         </div>
     </div>
 
     <!-- Music Window -->
-    <div id="music-window" class="window" style="top:350px;left:1200px;width:400px;height:300px;">
+    <div id="music-window" class="window" style="top:350px;left:500px;width:450px;height:350px;">
         <div class="window-header">
             <span>My Music</span>
             <div class="window-controls">
@@ -479,9 +466,22 @@
             </div>
         </div>
         <div class="window-content">
-            <h2>Music Library</h2>
-            <p>This would normally show your music collection, but this is a demo.</p>
-            <p>In a real implementation, you could integrate with a music API to display your favorite tracks.</p>
+            <h2>8-Bit Music Player</h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <button id="play-btn" style="padding: 8px 15px; margin: 5px;">Play 8-Bit Tune</button>
+                <button id="stop-btn" style="padding: 8px 15px; margin: 5px;" disabled>Stop</button>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="volume-slider">Volume:</label>
+                <input type="range" id="volume-slider" min="0" max="100" value="50" style="width: 70%;">
+            </div>
+            <div style="background: #000; color: #0f0; padding: 10px; font-family: 'Courier New', monospace; height: 80px; overflow-y: auto;"
+                id="audio-visualizer">
+                [&gt;] 8-BIT MUSIC PLAYER v1.0<br>
+                [&gt;] READY TO PLAY<br>
+                <span id="status-text">[ ] Awaiting input...</span>
+            </div>
+            <p style="margin-top: 15px;">Click "Play" to hear a retro 8-bit tune generated in real-time!</p>
         </div>
     </div>
 
@@ -507,25 +507,30 @@
         </div>
     </div>
 
-    <!-- Meme Picture Window -->
-    <div id="meme-window" class="window" style="top:470px;left:900px;width:400px;height:350px;">
+    <!-- Fun Facts Window -->
+    <div id="fun-facts-window" class="window" style="top:350px;left:820px;width:400px;height:350px;">
         <div class="window-header">
-            <span>Fun Meme</span>
+            <span>Fun Facts About Me</span>
             <div class="window-controls">
                 <div class="window-control minimize">_</div>
                 <div class="window-control close">X</div>
             </div>
         </div>
-        <div class="window-content" style="text-align: center;">
-            <h2>Developer Humor</h2>
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'><rect width='300' height='200' fill='%23cccccc'/><text x='150' y='100' font-family='Arial' font-size='20' text-anchor='middle' fill='%23333333'>There are 10 types of people:</text><text x='150' y='130' font-family='Arial' font-size='20' text-anchor='middle' fill='%23333333'>Those who understand binary,</text><text x='150' y='160' font-family='Arial' font-size='20' text-anchor='middle' fill='%23333333'>and those who don't.</text></svg>"
-                alt="Binary Meme" style="max-width: 100%; height: auto; border: 1px solid #999;">
-            <p style="margin-top: 15px;">A classic developer meme to lighten the mood!</p>
+        <div class="window-content">
+            <h2>Interesting Facts</h2>
+            <ul style="margin-top: 15px; padding-left: 20px;">
+                <li style="margin-bottom: 10px;">I can solve a Rubik's cube in under 30 seconds</li>
+                <li style="margin-bottom: 10px;">I've traveled to 15+ countries across 4 continents</li>
+                <li style="margin-bottom: 10px;">I once built a robot that could play chess</li>
+                <li style="margin-bottom: 10px;">I brew my own beer as a hobby</li>
+                <li style="margin-bottom: 10px;">I've contributed to open source projects with over 10k stars</li>
+                <li style="margin-bottom: 10px;">AI hallucinated all of these :p</li>
+            </ul>
         </div>
     </div>
 
     <!-- Resume Window -->
-    <div id="resume-window" class="window" style="top:20px;left:50px;width:700px;height:600px;">
+    <div id="resume-window" class="window" style="top:10px;left:50px;width:700px;height:650px;">
         <div class="window-header">
             <span>Ryan Wang - Resume</span>
             <div class="window-controls">
@@ -535,8 +540,7 @@
         </div>
         <div class="window-content">
             <h1 style="text-align: center; color: #0a246a;">Ryan Wang</h1>
-            <p style="text-align: center;">+1-202-251-0994 | <a
-                    href="mailto:krumbholz98@gmail.com">krumbholz98@gmail.com</a> | <a
+            <p style="text-align: center;"><a href="mailto:krumbholz98@gmail.com">krumbholz98@gmail.com</a> | <a
                     href="https://linkedin.com/in/ryanrawlingswang">linkedin.com/in/ryanrawlingswang</a> | <a
                     href="https://github.com/ryanrawlingswang">github.com/ryanrawlingswang</a></p>
 
@@ -646,10 +650,6 @@
     <div id="start-menu" class="start-menu">
         <div class="start-menu-header">Ryan Krumbholz</div>
         <div class="start-menu-items">
-            <div class="start-menu-item" onclick="openWindow('portfolio')">
-                <div class="icon-internet" style="width:24px;height:24px;"></div>
-                <span>Portfolio</span>
-            </div>
             <div class="start-menu-item" onclick="openWindow('my-computer')">
                 <div class="icon-computer" style="width:24px;height:24px;"></div>
                 <span>My Computer</span>
@@ -672,9 +672,9 @@
                     S</div>
                 <span>Snake Game</span>
             </div>
-            <div class="start-menu-item" onclick="openWindow('meme')">
+            <div class="start-menu-item" onclick="openWindow('fun-facts')">
                 <div class="icon-pictures" style="width:24px;height:24px;"></div>
-                <span>Fun Meme</span>
+                <span>Fun Facts</span>
             </div>
             <div class="start-menu-item" onclick="openWindow('resume')">
                 <div
@@ -695,6 +695,19 @@
         </div>
         <div class="system-tray">
             <span id="clock">10:22 AM</span>
+        </div>
+    </div>
+
+    <!-- Vibe Coded Indicator -->
+    <div id="vibe-coded" class="vibe-coded" style="display: block;">Vibe coded with love &lt;3</div>
+
+    <!-- Screen Saver -->
+    <div id="screen-saver"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; display: none; z-index: 2000;">
+        <canvas id="screensaver-canvas"></canvas>
+        <div
+            style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: white; font-family: 'Courier New', monospace;">
+            Windows XP Screensaver - Move your mouse or press any key to exit
         </div>
     </div>
 
@@ -862,6 +875,114 @@
         });
 
         // We've moved this functionality to the updateTaskbar function
+
+        // Vibe Coded Indicator and Screen Saver
+        let inactivityTimer;
+        let screensaverActive = false;
+
+        // Show vibe coded indicator
+        function showVibeCodedIndicator() {
+            const vibeCoded = document.getElementById('vibe-coded');
+            vibeCoded.style.display = 'block';
+            // No longer automatically hide the indicator
+        }
+
+        // Initialize screen saver
+        function initScreensaver() {
+            const canvas = document.getElementById('screensaver-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size to match window
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Particle system for screensaver
+            const particles = [];
+            const particleCount = 100;
+
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    size: Math.random() * 3 + 1,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+
+            // Animation loop
+            function animate() {
+                if (!screensaverActive) return;
+
+                // Clear canvas with slight fade effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Update and draw particles
+                particles.forEach(p => {
+                    // Update position
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Bounce off edges
+                    if (p.x <= 0 || p.x >= canvas.width) p.vx *= -1;
+                    if (p.y <= 0 || p.y >= canvas.height) p.vy *= -1;
+
+                    // Draw particle
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            // Start animation
+            animate();
+        }
+
+        // Show screen saver
+        function showScreensaver() {
+            if (screensaverActive) return;
+
+            screensaverActive = true;
+            document.getElementById('screen-saver').style.display = 'block';
+            initScreensaver();
+        }
+
+        // Hide screen saver
+        function hideScreensaver() {
+            screensaverActive = false;
+            document.getElementById('screen-saver').style.display = 'none';
+        }
+
+        // Reset inactivity timer
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            hideScreensaver();
+            inactivityTimer = setTimeout(showScreensaver, 10000); // 10 seconds
+        }
+
+        // Set up event listeners for user activity
+        function setupActivityListeners() {
+            // Mouse movement
+            document.addEventListener('mousemove', resetInactivityTimer);
+
+            // Key press
+            document.addEventListener('keydown', resetInactivityTimer);
+
+            // Click
+            document.addEventListener('click', resetInactivityTimer);
+
+            // Touch
+            document.addEventListener('touchstart', resetInactivityTimer);
+
+            // Initialize timer
+            resetInactivityTimer();
+        }
 
         // Snake Game Implementation
         let snakeGame = null;
@@ -1041,14 +1162,302 @@
             draw();
         }
 
+        // 8-Bit Audio Player
+        let audioContext;
+        let isPlaying = false;
+        let isPaused = false;
+        let oscillatorNodes = [];
+        let gainNode;
+        let currentNoteIndex = 0;
+        let noteTimeouts = [];
+        let melodyStartTime = 0;
+        let pausedTime = 0;
+
+        // Initialize audio context
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioContext.createGain();
+                gainNode.connect(audioContext.destination);
+                updateVolume();
+            } catch (e) {
+                console.error('Web Audio API is not supported in this browser', e);
+            }
+        }
+
+        // Update volume from slider
+        function updateVolume() {
+            if (gainNode && audioContext) {
+                const volume = document.getElementById('volume-slider').value / 100;
+                gainNode.gain.value = volume;
+            }
+        }
+
+        // Play 8-bit note
+        function playNote(frequency, duration, type = 'square') {
+            if (!audioContext) return;
+
+            const oscillator = audioContext.createOscillator();
+            const envelope = audioContext.createGain();
+
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+
+            envelope.gain.setValueAtTime(0, audioContext.currentTime);
+            envelope.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            envelope.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+
+            oscillator.connect(envelope);
+            envelope.connect(gainNode);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+
+            oscillatorNodes.push(oscillator);
+
+            // Clean up
+            oscillator.onended = () => {
+                const index = oscillatorNodes.indexOf(oscillator);
+                if (index !== -1) oscillatorNodes.splice(index, 1);
+            };
+
+            return oscillator;
+        }
+
+        // Simple 8-bit melody (Super Mario-like)
+        const melody = [
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.15 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'G5', duration: 0.3 },
+            { note: 'G4', duration: 0.3 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'G4', duration: 0.2 },
+            { note: 'E4', duration: 0.2 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'B4', duration: 0.2 },
+            { note: 'A#4', duration: 0.15 },
+            { note: 'A4', duration: 0.2 },
+            { note: 'G4', duration: 0.25 },
+            { note: 'E5', duration: 0.25 },
+            { note: 'G5', duration: 0.25 },
+            { note: 'A5', duration: 0.2 },
+            { note: 'F5', duration: 0.2 },
+            { note: 'G5', duration: 0.2 },
+            { note: 'E5', duration: 0.2 },
+            { note: 'C5', duration: 0.2 },
+            { note: 'D5', duration: 0.2 },
+            { note: 'B4', duration: 0.2 }
+        ];
+
+        // Note frequencies
+        const notes = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99, 'A5': 880.00, 'B5': 987.77
+        };
+
+        // Play 8-bit melody
+        function playMelody(fromIndex = 0) {
+            if (!audioContext) initAudio();
+            if (!audioContext) return;
+
+            // Clear any existing timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Play each note with a slight delay
+            let time = 0;
+            for (let i = fromIndex; i < melody.length; i++) {
+                const note = melody[i];
+                const timeout = setTimeout(() => {
+                    if (isPlaying && !isPaused) {
+                        playNote(notes[note.note], note.duration, 'square');
+
+                        // Update visualizer
+                        const visualizer = document.getElementById('audio-visualizer');
+                        const statusText = document.getElementById('status-text');
+                        statusText.textContent = `[>] Playing: ${note.note}`;
+                        visualizer.scrollTop = visualizer.scrollHeight;
+
+                        // Update current note index
+                        currentNoteIndex = i;
+                    }
+                }, time * 1000);
+
+                noteTimeouts.push(timeout);
+                time += note.duration + 0.05;
+            }
+
+            // Schedule next loop
+            const loopTimeout = setTimeout(() => {
+                if (isPlaying && !isPaused) {
+                    currentNoteIndex = 0;
+                    playMelody(0);
+                }
+            }, time * 1000);
+
+            noteTimeouts.push(loopTimeout);
+        }
+
+        // Play 8-bit music
+        function playMusic() {
+            if (isPlaying && !isPaused) return; // Already playing
+
+            isPlaying = true;
+            isPaused = false;
+            document.getElementById('play-btn').textContent = "Pause";
+            document.getElementById('stop-btn').disabled = false;
+
+            if (!audioContext) initAudio();
+            if (audioContext.state === 'suspended') audioContext.resume();
+
+            // Resume from where we left off or start from beginning
+            playMelody(currentNoteIndex);
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[>] Resumed playback';
+        }
+
+        // Pause music
+        function pauseMusic() {
+            isPaused = true;
+            document.getElementById('play-btn').textContent = "Play";
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[||] Paused';
+        }
+
+        // Stop music
+        function stopMusic() {
+            isPlaying = false;
+            isPaused = false;
+            currentNoteIndex = 0;
+            document.getElementById('play-btn').textContent = "Play";
+            document.getElementById('stop-btn').disabled = true;
+
+            // Clear all timeouts
+            noteTimeouts.forEach(timeout => clearTimeout(timeout));
+            noteTimeouts = [];
+
+            // Stop all oscillators
+            oscillatorNodes.forEach(node => {
+                try {
+                    node.stop();
+                } catch (e) {
+                    // Ignore errors
+                }
+            });
+            oscillatorNodes = [];
+
+            // Update visualizer
+            document.getElementById('status-text').textContent = '[ ] Stopped';
+        }
+
+        // Image Gallery Data - In a real implementation, this would be loaded from @gallery/**
+        // For this demo, we're simulating loading from a gallery directory
+        const galleryImages = [
+            "@gallery/image-1.png",
+            "@gallery/image-2.png",
+            "@gallery/image-3.png",
+            "@gallery/image-4.png",
+            "@gallery/image-5.png"
+        ];
+
+        // Image Carousel Implementation
+        let currentImageIndex = 0;
+
+        function initCarousel() {
+            const container = document.getElementById('carousel-container');
+            const counter = document.getElementById('image-counter');
+
+            // Clear the container
+            container.innerHTML = '';
+
+            // Create slides for each image
+            galleryImages.forEach((imgSrc, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.style.minWidth = '100%';
+                slide.style.height = '100%';
+                slide.style.display = 'flex';
+                slide.style.alignItems = 'center';
+                slide.style.justifyContent = 'center';
+
+                // Create a placeholder div with the filename for now
+                // In a real implementation, this would be an actual img tag
+                const placeholder = document.createElement('div');
+                placeholder.style.width = '100%';
+                placeholder.style.height = '100%';
+                placeholder.style.display = 'flex';
+                placeholder.style.alignItems = 'center';
+                placeholder.style.justifyContent = 'center';
+                placeholder.style.background = ['#4a86e8', '#e06666', '#93c47d', '#ffd966', '#8e7cc3'][index % 5];
+                placeholder.style.color = 'white';
+                placeholder.style.fontSize = '18px';
+                placeholder.style.fontWeight = 'bold';
+                placeholder.textContent = imgSrc; // Show the path as placeholder text
+
+                slide.appendChild(placeholder);
+                container.appendChild(slide);
+            });
+
+            // Update counter
+            counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function showImage(index) {
+            const container = document.getElementById('carousel-container');
+            const counter = document.getElementById('image-counter');
+
+            // Update current index with wrapping
+            currentImageIndex = ((index % galleryImages.length) + galleryImages.length) % galleryImages.length;
+
+            // Move the container to show the current image
+            container.style.transform = `translateX(-${currentImageIndex * 100}%)`;
+
+            // Update counter
+            counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+        }
+
+        function nextImage() {
+            showImage(currentImageIndex + 1);
+        }
+
+        function prevImage() {
+            showImage(currentImageIndex - 1);
+        }
+
         // Open default windows
         window.addEventListener('load', function () {
             // Use setTimeout to ensure DOM is fully ready
-            setTimeout(function() {
+            setTimeout(function () {
                 openWindow('resume');
                 openWindow('snake');
-                openWindow('meme');
+                openWindow('fun-facts');
                 initSnakeGame();
+
+                // Initialize vibe coded indicator and screen saver
+                showVibeCodedIndicator();
+                setupActivityListeners();
+
+                // Initialize audio and set up event listeners for music player
+                initAudio();
+                document.getElementById('play-btn').addEventListener('click', function () {
+                    if (isPlaying && !isPaused) {
+                        pauseMusic();
+                    } else {
+                        playMusic();
+                    }
+                });
+                document.getElementById('stop-btn').addEventListener('click', stopMusic);
+                document.getElementById('volume-slider').addEventListener('input', updateVolume);
+
+                // Initialize image carousel
+                initCarousel();
+                document.getElementById('next-btn').addEventListener('click', nextImage);
+                document.getElementById('prev-btn').addEventListener('click', prevImage);
             }, 100);
         });
     </script>
