@@ -220,7 +220,7 @@
             box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
             display: none;
             resize: both;
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         .window.active {
@@ -270,7 +270,7 @@
         .window-content {
             padding: 15px;
             height: calc(100% - 25px);
-            overflow: auto;
+            overflow: auto; /* Allow scrolling for content that overflows */
         }
 
         /* Portfolio Content */
@@ -490,7 +490,7 @@
                 <div class="window-control close">X</div>
             </div>
         </div>
-        <div class="window-content">
+        <div class="window-content" style="overflow: hidden;">
             <div style="text-align: center; margin-bottom: 10px;">
                 <button id="start-snake-btn" style="padding: 5px 10px;">Start Game</button>
                 <span style="margin-left: 20px;">Score: <span id="snake-score">0</span></span>
