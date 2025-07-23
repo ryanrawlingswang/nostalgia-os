@@ -1087,6 +1087,12 @@
 
             // Initialize game
             function resetGame() {
+                // Clear any existing game over message
+                const existingMessage = document.getElementById('game-over-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+
                 // Reset snake
                 snake = [
                     { x: 10, y: 10 },
@@ -1228,7 +1234,11 @@
 
             // Start game
             function startGame() {
-                if (gameRunning) return;
+                // Clear any existing game over message
+                const existingMessage = document.getElementById('game-over-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
 
                 resetGame();
                 gameRunning = true;
@@ -1281,12 +1291,41 @@
                 document.getElementById('restart-button').addEventListener('click', function (e) {
                     e.stopPropagation(); // Prevent event from bubbling to window
                     gameOverMessage.remove();
+                    
+                    // Stop any existing game
+                    if (gameRunning) {
+                        gameRunning = false;
+                        clearTimeout(gameLoop);
+                        document.removeEventListener('keydown', changeDirection);
+                    }
+                    
+                    // Reset and start the game
+                    resetGame();
+                    draw();
                     startGame();
                 });
             }
 
             // Button event
-            startButton.addEventListener('click', startGame);
+            startButton.addEventListener('click', function() {
+                // If game is running, stop it first
+                if (gameRunning) {
+                    gameRunning = false;
+                    clearTimeout(gameLoop);
+                    document.removeEventListener('keydown', changeDirection);
+                }
+                
+                // Clear any existing game over message
+                const existingMessage = document.getElementById('game-over-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                // Reset and start the game
+                resetGame();
+                draw();
+                startGame();
+            });
 
             // Initial draw
             resetGame();
