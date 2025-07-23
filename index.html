@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows XP Resume</title>
+    <title>Nostalgia OS</title>
     <link rel="icon" type="image/x-icon" href="public/favicon.ico">
     <style>
         * {
@@ -1291,14 +1291,14 @@
                 document.getElementById('restart-button').addEventListener('click', function (e) {
                     e.stopPropagation(); // Prevent event from bubbling to window
                     gameOverMessage.remove();
-                    
+
                     // Stop any existing game
                     if (gameRunning) {
                         gameRunning = false;
                         clearTimeout(gameLoop);
                         document.removeEventListener('keydown', changeDirection);
                     }
-                    
+
                     // Reset and start the game
                     resetGame();
                     draw();
@@ -1307,20 +1307,20 @@
             }
 
             // Button event
-            startButton.addEventListener('click', function() {
+            startButton.addEventListener('click', function () {
                 // If game is running, stop it first
                 if (gameRunning) {
                     gameRunning = false;
                     clearTimeout(gameLoop);
                     document.removeEventListener('keydown', changeDirection);
                 }
-                
+
                 // Clear any existing game over message
                 const existingMessage = document.getElementById('game-over-message');
                 if (existingMessage) {
                     existingMessage.remove();
                 }
-                
+
                 // Reset and start the game
                 resetGame();
                 draw();
