@@ -1041,10 +1041,26 @@
 
             // Place food at random location
             function placeFood() {
-                food = {
-                    x: Math.floor(Math.random() * tileCount),
-                    y: Math.floor(Math.random() * tileCount)
-                };
+                let newFood;
+                let onSnake;
+                
+                do {
+                    onSnake = false;
+                    newFood = {
+                        x: Math.floor(Math.random() * tileCount),
+                        y: Math.floor(Math.random() * tileCount)
+                    };
+                    
+                    // Check if food is on snake
+                    for (let i = 0; i < snake.length; i++) {
+                        if (snake[i].x === newFood.x && snake[i].y === newFood.y) {
+                            onSnake = true;
+                            break;
+                        }
+                    }
+                } while (onSnake);
+                
+                food = newFood;
             }
 
             // Draw game elements
