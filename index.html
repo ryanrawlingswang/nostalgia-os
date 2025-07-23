@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows XP Resume</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -481,7 +482,7 @@
     </div>
 
     <!-- Snake Game Window -->
-    <div id="snake-window" class="window" style="top:20px;left:900px;width:420px;height:420px;">
+    <div id="snake-window" class="window" style="top:20px;left:900px;width:500px;height:500px;">
         <div class="window-header">
             <span>Snake Game</span>
             <div class="window-controls">
@@ -494,9 +495,11 @@
                 <button id="start-snake-btn" style="padding: 5px 10px;">Start Game</button>
                 <span style="margin-left: 20px;">Score: <span id="snake-score">0</span></span>
             </div>
-            <canvas id="snake-canvas" width="400" height="350"
-                style="border: 1px solid #000; background: #000;"></canvas>
-            <div style="margin-top: 10px; font-size: 12px;">
+            <div style="display: flex; justify-content: center;">
+                <canvas id="snake-canvas" width="450" height="400"
+                    style="border: 1px solid #000; background: #000;"></canvas>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; text-align: center;">
                 <p>Use arrow keys to control the snake. Eat the food to grow and earn points.</p>
             </div>
         </div>
@@ -1160,7 +1163,43 @@
                 gameRunning = false;
                 clearTimeout(gameLoop);
                 document.removeEventListener('keydown', changeDirection);
-                alert(`Game Over! Your score: ${snakeScore}`);
+                
+                // Display game over message in the game window instead of alert
+                // First, remove any existing game over message
+                const existingMessage = document.getElementById('game-over-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.id = 'game-over-message';
+                gameOverMessage.style.position = 'absolute';
+                gameOverMessage.style.top = '50%';
+                gameOverMessage.style.left = '50%';
+                gameOverMessage.style.transform = 'translate(-50%, -50%)';
+                gameOverMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                gameOverMessage.style.color = 'white';
+                gameOverMessage.style.padding = '20px';
+                gameOverMessage.style.borderRadius = '10px';
+                gameOverMessage.style.textAlign = 'center';
+                gameOverMessage.style.zIndex = '1000'; // Ensure it's above the canvas
+                gameOverMessage.innerHTML = `
+                    <h2>Game Over!</h2>
+                    <p>Your score: ${snakeScore}</p>
+                    <button id="restart-button" style="padding: 8px 15px; margin-top: 10px; cursor: pointer;">Play Again</button>
+                `;
+                
+                // Add to snake game window content
+                const windowContent = document.querySelector('#snake-window .window-content');
+                windowContent.style.position = 'relative'; // Ensure relative positioning for absolute child
+                windowContent.appendChild(gameOverMessage);
+                
+                // Add event listener to restart button
+                document.getElementById('restart-button').addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent event from bubbling to window
+                    gameOverMessage.remove();
+                    startGame();
+                });
             }
 
             // Button event
